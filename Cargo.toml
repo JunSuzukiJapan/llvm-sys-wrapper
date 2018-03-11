@@ -1,0 +1,7 @@
+[package]
+name = "llvm-sys-wrapper"
+version = "0.1.0"
+authors = ["JunSuzukiJapan <jun.suzuki.japan@gmail.com>"]
+
+[dependencies]
+llvm-sys = "50"
