@@ -18,13 +18,13 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
     builder.position_at_end(entry_block);
 
     // int a = 32
-    let typ = unsafe { LLVMInt32Type() };
-    let a = builder.build_alloca(typ, "a");
+    let int32_typ = LLVM::Type::Int32();
+    let a = builder.build_alloca(int32_typ, "a");
     let const_a_value = LLVM::Const::SInt32(32);
     builder.build_store(const_a_value, a);
 
     // int b = 16
-    let b = builder.build_alloca(typ, "b");
+    let b = builder.build_alloca(int32_typ, "b");
     let const_b_value = LLVM::Const::SInt32(16);
     builder.build_store(const_b_value, b);
 
