@@ -12,7 +12,7 @@ fn test_puts() {
     // create context
     let context = Context::global_context();
 
-        // setup our builder and module
+    // setup our builder and module
     let builder = Builder::new();
     let module = Module::with_context(builder.as_ref(), "top", context);
 
@@ -37,6 +37,6 @@ fn test_puts() {
         Ok(_) => {
             module.dump()
         },
-        Err(msg) => println!("Error: {}", msg)
+        Err(msg) => panic!("Error: {}", msg)
     }
 }

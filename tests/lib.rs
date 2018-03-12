@@ -41,6 +41,6 @@ fn it_works() {
         Ok(_) => {
             module.dump()
         },
-        Err(msg) => println!("Error: {}", msg)
+        Err(msg) => panic!("Error: {}", msg)
     }
 }
