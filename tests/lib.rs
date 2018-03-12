@@ -7,7 +7,7 @@ use llvm_sys_wrapper::*;
 fn it_works() {
     // 参考: [Go言語で利用するLLVM入門](https://postd.cc/an-introduction-to-llvm-in-go/)
 
-    //LLVM::initialize();
+    LLVM::initialize();
 
     // setup our builder and module
     let builder = Builder::new();

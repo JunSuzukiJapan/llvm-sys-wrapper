@@ -11,6 +11,7 @@ pub use self::builder::Builder;
 pub use self::module::Module;
 pub use self::function::Function;
 pub use self::context::Context;
+pub use self::llvm_sys::*;
 
 #[allow(non_snake_case)]
 pub mod LLVM {
