@@ -26,4 +26,8 @@ impl Function {
         let label_name = CString::new(name).unwrap();
         unsafe { LLVMAppendBasicBlock(self.llvm_function, label_name.as_ptr()) }
     }
+
+    pub fn as_ref(&self) -> LLVMValueRef {
+        self.llvm_function
+    }
 }

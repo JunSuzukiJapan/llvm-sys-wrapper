@@ -3,6 +3,7 @@ extern crate llvm_sys;
 mod builder;
 mod module;
 mod function;
+mod context;
 
 #[allow(unused_imports)]
 use builder::Builder;
@@ -10,12 +11,15 @@ use builder::Builder;
 use module::Module;
 #[allow(unused_imports)]
 use function::Function;
+#[allow(unused_imports)]
+use context::Context;
 
 #[allow(non_snake_case)]
 pub mod LLVM {
     use llvm_sys::core::*;
     use llvm_sys::target;
     use llvm_sys::prelude::*;
+    use std::os::raw::c_uint;
 
     pub fn initialize(){
         unsafe {
@@ -31,6 +35,9 @@ pub mod LLVM {
     pub mod types {
         use super::*;
 
+        pub fn PointerType(elem_type: LLVMTypeRef, address_space: c_uint) -> LLVMTypeRef {
+            unsafe { LLVMPointerType(elem_type, address_space) }
+        }
         pub fn Half() -> LLVMTypeRef {
             unsafe { LLVMHalfType() }
         }
@@ -112,17 +119,20 @@ mod tests {
     use llvm_sys::core::*;
     use super::*;
 
+/*
     #[test]
     fn it_works() {
-        LLVM::initialize();
+        // 参考: [Go言語で利用するLLVM入門](https://postd.cc/an-introduction-to-llvm-in-go/)
+
+        //LLVM::initialize();
 
         // setup our builder and module
         let builder = Builder::new();
         let module = Module::new(builder.as_ref(), "my_module");
 
         // create our function prologue
-        let function_type = function_type!(LLVM::types::Int32());
-        let function = Function::new(builder.as_ref(), module.as_ref(), "main", function_type);
+        let fun_type = function_type!(LLVM::types::Int32());
+        let function = Function::new(builder.as_ref(), module.as_ref(), "main", fun_type);
         let entry_block = function.append_basic_block("entry");
         builder.position_at_end(entry_block);
 
@@ -150,5 +160,44 @@ mod tests {
             },
             Err(msg) => println!("Error: {}", msg)
         }        
+    }
+*/
+
+    #[test]
+    fn test_puts() {
+        // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜](http://blog.64p.org/entry/2012/07/18/172418)
+
+        LLVM::initialize();
+
+        // create context
+        let context = Context::global_context();
+
+         // setup our builder and module
+        let builder = Builder::new();
+        let module = Module::with_context(builder.as_ref(), "top", context);
+
+        // create main function and entry point
+        let fun_type = function_type!(LLVM::types::Void());
+        let function = Function::new(builder.as_ref(), module.as_ref(), "main", fun_type);
+        let entry_block = function.append_basic_block("entry");
+        builder.position_at_end(entry_block);
+
+        let helloworld = builder.build_global_string_ptr("Hello, world!\n", "hello_world_str");
+
+        let puts_type = function_type!(LLVM::types::Int32(), LLVM::types::PointerType(LLVM::types::Int8(), 0) );
+        let puts_func = Function::new(builder.as_ref(), module.as_ref(), "puts", puts_type);
+
+        let mut args = [helloworld];
+        let _call = builder.build_call(puts_func.as_ref(), args.as_mut_ptr(), args.len() as u32, "call_puts");
+
+        let _ret = builder.build_ret_void();
+
+        // verify & dump
+        match module.verify() {
+            Ok(_) => {
+                module.dump()
+            },
+            Err(msg) => println!("Error: {}", msg)
+        }
     }
 }

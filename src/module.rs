@@ -25,6 +25,15 @@ impl Module {
         }
     }
 
+    pub fn with_context(builder: LLVMBuilderRef, name: &str, context: LLVMContextRef) -> Module {
+        let mod_name = CString::new(name).unwrap();
+        let module = unsafe { LLVMModuleCreateWithNameInContext(mod_name.as_ptr(), context) };
+        Module {
+            llvm_builder: builder,
+            llvm_module: module
+        }
+    }
+
     pub fn as_ref(&self) -> LLVMModuleRef {
         self.llvm_module
     }
