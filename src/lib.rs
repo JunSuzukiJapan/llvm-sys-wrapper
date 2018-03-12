@@ -45,6 +45,12 @@ macro_rules! function_type {
             LLVMFunctionType($result_type, param_types.as_mut_ptr(), param_types.len() as u32, 0)
         }
     );
+    ($result_type:expr, ...) => (
+        unsafe {
+            let mut param_types = [];
+            LLVMFunctionType($result_type, param_types.as_mut_ptr(), param_types.len() as u32, 1)
+        }
+    );
     ($result_type:expr, $( $param_type:expr ),* ) => (
         unsafe {
             let mut param_types = [ $( $param_type ),* ];
