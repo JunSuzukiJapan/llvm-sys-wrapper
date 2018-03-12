@@ -45,6 +45,36 @@ impl Builder {
         unsafe { LLVMBuildAdd(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
     }
 
+    pub fn build_sub(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildSub(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_mul(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildMul(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_sdiv(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildSDiv(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_udiv(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildUDiv(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_srem(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildSRem(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_urem(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildURem(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
     pub fn build_ret(&self, value: LLVMValueRef) -> LLVMValueRef {
         unsafe { LLVMBuildRet(self.llvm_builder, value) }
     }

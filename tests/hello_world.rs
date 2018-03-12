@@ -4,9 +4,7 @@ extern crate llvm_sys_wrapper;
 use llvm_sys_wrapper::*;
 
 #[test]
-fn test_puts() {
-    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜](http://blog.64p.org/entry/2012/07/18/172418)
-
+fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜](http://blog.64p.org/entry/2012/07/18/172418)
     LLVM::initialize();
 
     // create context
@@ -22,7 +20,7 @@ fn test_puts() {
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
-    let helloworld = builder.build_global_string_ptr("Hello, world!\n", "hello_world_str");
+    let helloworld = builder.build_global_string_ptr("Hello, world!", "hello_world_str");
 
     let puts_type = function_type!(LLVM::types::Int32(), LLVM::types::PointerType(LLVM::types::Int8(), 0) );
     let puts_func = Function::new(builder.as_ref(), module.as_ref(), "puts", puts_type);

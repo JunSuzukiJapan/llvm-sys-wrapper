@@ -4,9 +4,7 @@ extern crate llvm_sys_wrapper;
 use llvm_sys_wrapper::*;
 
 #[test]
-fn it_works() {
-    // 参考: [Go言語で利用するLLVM入門](https://postd.cc/an-introduction-to-llvm-in-go/)
-
+fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.cc/an-introduction-to-llvm-in-go/)
     LLVM::initialize();
 
     // setup our builder and module
