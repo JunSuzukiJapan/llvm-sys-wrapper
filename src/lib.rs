@@ -31,7 +31,7 @@ pub mod LLVM {
         }
     }
 
-    pub mod types {
+    pub mod Type {
         use super::*;
 
         pub fn PointerType(elem_type: LLVMTypeRef, address_space: c_uint) -> LLVMTypeRef {
@@ -82,6 +82,10 @@ pub mod LLVM {
         pub fn PPCFP128() -> LLVMTypeRef {
             unsafe { LLVMPPCFP128Type() }
         }
+    }
+
+    pub mod Const {
+
     }
 }
 
