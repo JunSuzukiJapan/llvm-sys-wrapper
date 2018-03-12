@@ -85,7 +85,14 @@ pub mod LLVM {
     }
 
     pub mod Const {
+        use super::*;
 
+        pub fn SInt32(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt32Type(), val, 0) }
+        }
+        pub fn UInt32(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt32Type(), val, 1) }
+        }
     }
 }
 
