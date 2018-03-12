@@ -37,23 +37,14 @@ pub mod LLVM {
         pub fn PointerType(elem_type: LLVMTypeRef, address_space: c_uint) -> LLVMTypeRef {
             unsafe { LLVMPointerType(elem_type, address_space) }
         }
-        pub fn Half() -> LLVMTypeRef {
-            unsafe { LLVMHalfType() }
+        pub fn Void() -> LLVMTypeRef {
+            unsafe { LLVMVoidType() }
         }
         pub fn Int1() -> LLVMTypeRef {
             unsafe { LLVMInt1Type() }
         }
         pub fn Int8() -> LLVMTypeRef {
             unsafe { LLVMInt8Type() }
-        }
-        pub fn Void() -> LLVMTypeRef {
-            unsafe { LLVMVoidType() }
-        }
-        pub fn Float() -> LLVMTypeRef {
-            unsafe { LLVMFloatType() }
-        }
-        pub fn FP128() -> LLVMTypeRef {
-            unsafe { LLVMFP128Type() }
         }
         pub fn Int16() -> LLVMTypeRef {
             unsafe { LLVMInt16Type() }
@@ -64,14 +55,20 @@ pub mod LLVM {
         pub fn Int64() -> LLVMTypeRef {
             unsafe { LLVMInt64Type() }
         }
-        pub fn Label() -> LLVMTypeRef {
-            unsafe { LLVMLabelType() }
+        pub fn Int128() -> LLVMTypeRef {
+            unsafe { LLVMInt128Type() }
+        }
+        pub fn Half() -> LLVMTypeRef {
+            unsafe { LLVMHalfType() }
+        }
+        pub fn Float() -> LLVMTypeRef {
+            unsafe { LLVMFloatType() }
         }
         pub fn Double() -> LLVMTypeRef {
             unsafe { LLVMDoubleType() }
         }
-        pub fn Int128() -> LLVMTypeRef {
-            unsafe { LLVMInt128Type() }
+        pub fn FP128() -> LLVMTypeRef {
+            unsafe { LLVMFP128Type() }
         }
         pub fn X86MMX() -> LLVMTypeRef {
             unsafe { LLVMX86MMXType() }
@@ -81,6 +78,9 @@ pub mod LLVM {
         }
         pub fn PPCFP128() -> LLVMTypeRef {
             unsafe { LLVMPPCFP128Type() }
+        }
+        pub fn Label() -> LLVMTypeRef {
+            unsafe { LLVMLabelType() }
         }
     }
 
@@ -116,6 +116,19 @@ pub mod LLVM {
         }
         pub fn UInt64(val: u64) -> LLVMValueRef {
             unsafe { LLVMConstInt(LLVMInt64Type(), val, 0) }
+        }
+        pub fn SInt128(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt128Type(), val, 1) }
+        }
+        pub fn UInt128(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt128Type(), val, 0) }
+        }
+
+        pub fn Float(val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMFloatType(), val) }
+        }
+        pub fn Double(val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMDoubleType(), val) }
         }
     }
 }
