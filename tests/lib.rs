@@ -1,4 +1,3 @@
-extern crate llvm_sys;
 #[macro_use]
 extern crate llvm_sys_wrapper;
 
