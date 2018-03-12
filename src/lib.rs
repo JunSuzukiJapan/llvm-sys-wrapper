@@ -88,34 +88,34 @@ pub mod LLVM {
         use super::*;
 
         pub fn SInt1(val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt1Type(), val, 0) }
-        }
-        pub fn UInt1(val: u64) -> LLVMValueRef {
             unsafe { LLVMConstInt(LLVMInt1Type(), val, 1) }
         }
-        pub fn SInt8(val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt8Type(), val, 0) }
+        pub fn UInt1(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt1Type(), val, 0) }
         }
-        pub fn UInt8(val: u64) -> LLVMValueRef {
+        pub fn SInt8(val: u64) -> LLVMValueRef {
             unsafe { LLVMConstInt(LLVMInt8Type(), val, 1) }
         }
-        pub fn SInt16(val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt16Type(), val, 0) }
+        pub fn UInt8(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt8Type(), val, 0) }
         }
-        pub fn UInt16(val: u64) -> LLVMValueRef {
+        pub fn SInt16(val: u64) -> LLVMValueRef {
             unsafe { LLVMConstInt(LLVMInt16Type(), val, 1) }
         }
-        pub fn SInt32(val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt32Type(), val, 0) }
+        pub fn UInt16(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt16Type(), val, 0) }
         }
-        pub fn UInt32(val: u64) -> LLVMValueRef {
+        pub fn SInt32(val: u64) -> LLVMValueRef {
             unsafe { LLVMConstInt(LLVMInt32Type(), val, 1) }
         }
+        pub fn UInt32(val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt32Type(), val, 0) }
+        }
         pub fn SInt64(val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt64Type(), val, 0) }
+            unsafe { LLVMConstInt(LLVMInt64Type(), val, 1) }
         }
         pub fn UInt64(val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt64Type(), val, 1) }
+            unsafe { LLVMConstInt(LLVMInt64Type(), val, 0) }
         }
     }
 }
