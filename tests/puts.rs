@@ -2,12 +2,7 @@ extern crate llvm_sys;
 #[macro_use]
 extern crate llvm_sys_wrapper;
 
-use llvm_sys::core::*;
-use llvm_sys_wrapper::LLVM;
-use llvm_sys_wrapper::builder::*;
-use llvm_sys_wrapper::context::*;
-use llvm_sys_wrapper::function::*;
-use llvm_sys_wrapper::module::*;
+use llvm_sys_wrapper::*;
 
 #[test]
 fn test_puts() {

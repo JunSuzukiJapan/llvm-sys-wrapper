@@ -1,18 +1,16 @@
 extern crate llvm_sys;
 
-pub mod builder;
-pub mod module;
-pub mod function;
-pub mod context;
+mod builder;
+mod module;
+mod function;
+mod context;
 
-#[allow(unused_imports)]
-use builder::Builder;
-#[allow(unused_imports)]
-use module::Module;
-#[allow(unused_imports)]
-use function::Function;
-#[allow(unused_imports)]
-use context::Context;
+pub use self::llvm_sys::core::*;
+pub use self::llvm_sys::prelude::*;
+pub use self::builder::Builder;
+pub use self::module::Module;
+pub use self::function::Function;
+pub use self::context::Context;
 
 #[allow(non_snake_case)]
 pub mod LLVM {
