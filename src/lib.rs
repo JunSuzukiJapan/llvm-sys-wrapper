@@ -124,11 +124,17 @@ pub mod LLVM {
             unsafe { LLVMConstInt(LLVMInt128Type(), val, 0) }
         }
 
+        pub fn Half(val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMHalfType(), val) }
+        }
         pub fn Float(val: f64) -> LLVMValueRef {
             unsafe { LLVMConstReal(LLVMFloatType(), val) }
         }
         pub fn Double(val: f64) -> LLVMValueRef {
             unsafe { LLVMConstReal(LLVMDoubleType(), val) }
+        }
+        pub fn FP128(val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMFP128Type(), val) }
         }
     }
 }
