@@ -1,13 +1,14 @@
-#![allow(unused_imports)]
-
 extern crate llvm_sys;
 
 mod builder;
 mod module;
 mod function;
 
+#[allow(unused_imports)]
 use builder::Builder;
+#[allow(unused_imports)]
 use module::Module;
+#[allow(unused_imports)]
 use function::Function;
 
 #[allow(non_snake_case)]
