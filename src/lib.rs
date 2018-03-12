@@ -70,14 +70,14 @@ pub mod LLVM {
         pub fn FP128() -> LLVMTypeRef {
             unsafe { LLVMFP128Type() }
         }
-        pub fn X86MMX() -> LLVMTypeRef {
-            unsafe { LLVMX86MMXType() }
-        }
         pub fn X86FP80() -> LLVMTypeRef {
             unsafe { LLVMX86FP80Type() }
         }
         pub fn PPCFP128() -> LLVMTypeRef {
             unsafe { LLVMPPCFP128Type() }
+        }
+        pub fn X86MMX() -> LLVMTypeRef {
+            unsafe { LLVMX86MMXType() }
         }
         pub fn Label() -> LLVMTypeRef {
             unsafe { LLVMLabelType() }
@@ -135,6 +135,12 @@ pub mod LLVM {
         }
         pub fn FP128(val: f64) -> LLVMValueRef {
             unsafe { LLVMConstReal(LLVMFP128Type(), val) }
+        }
+        pub fn X86FP80(val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMX86FP80Type(), val) }
+        }
+        pub fn PPCFP128(val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMPPCFP128Type(), val) }
         }
     }
 }
