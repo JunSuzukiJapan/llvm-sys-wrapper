@@ -31,8 +31,50 @@ pub mod LLVM {
     pub mod types {
         use super::*;
 
+        pub fn Half() -> LLVMTypeRef {
+            unsafe { LLVMHalfType() }
+        }
+        pub fn Int1() -> LLVMTypeRef {
+            unsafe { LLVMInt1Type() }
+        }
+        pub fn Int8() -> LLVMTypeRef {
+            unsafe { LLVMInt8Type() }
+        }
+        pub fn Void() -> LLVMTypeRef {
+            unsafe { LLVMVoidType() }
+        }
+        pub fn Float() -> LLVMTypeRef {
+            unsafe { LLVMFloatType() }
+        }
+        pub fn FP128() -> LLVMTypeRef {
+            unsafe { LLVMFP128Type() }
+        }
+        pub fn Int16() -> LLVMTypeRef {
+            unsafe { LLVMInt16Type() }
+        }
         pub fn Int32() -> LLVMTypeRef {
             unsafe { LLVMInt32Type() }
+        }
+        pub fn Int64() -> LLVMTypeRef {
+            unsafe { LLVMInt64Type() }
+        }
+        pub fn Label() -> LLVMTypeRef {
+            unsafe { LLVMLabelType() }
+        }
+        pub fn Double() -> LLVMTypeRef {
+            unsafe { LLVMDoubleType() }
+        }
+        pub fn Int128() -> LLVMTypeRef {
+            unsafe { LLVMInt128Type() }
+        }
+        pub fn X86MMX() -> LLVMTypeRef {
+            unsafe { LLVMX86MMXType() }
+        }
+        pub fn X86FP80() -> LLVMTypeRef {
+            unsafe { LLVMX86FP80Type() }
+        }
+        pub fn PPCFP128() -> LLVMTypeRef {
+            unsafe { LLVMPPCFP128Type() }
         }
     }
 }
