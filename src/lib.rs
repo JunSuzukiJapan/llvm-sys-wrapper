@@ -37,6 +37,22 @@ pub mod LLVM {
     }
 }
 
+#[allow(unused_macros)]
+macro_rules! function_type {
+    ($result_type:expr) => (
+        unsafe {
+            let mut param_types = [];
+            LLVMFunctionType($result_type, param_types.as_mut_ptr(), param_types.len() as u32, 0)
+        }
+    );
+    ($result_type:expr, $( $param_type:expr ),* ) => (
+        unsafe {
+            let mut param_types = [ $( $param_type ),* ];
+            LLVMFunctionType($result_type, param_types.as_mut_ptr(), param_types.len() as u32, 0)
+        }
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use llvm_sys::core::*;
@@ -51,11 +67,7 @@ mod tests {
         let module = Module::new(builder.as_ref(), "my_module");
 
         // create our function prologue
-        let function_type = unsafe {
-            let mut param_types = [];
-            LLVMFunctionType(LLVM::types::Int32(), param_types.as_mut_ptr(), param_types.len() as u32, 0)
-        };
-
+        let function_type = function_type!(LLVM::types::Int32());
         let function = Function::new(builder.as_ref(), module.as_ref(), "main", function_type);
         let entry_block = function.append_basic_block("entry");
         builder.position_at_end(entry_block);
@@ -77,6 +89,7 @@ mod tests {
         let ab_val = builder.build_add(a_val, b_val, "ab_val");
         builder.build_ret(ab_val);
 
+        // verify & dump
         match module.verify() {
             Ok(_) => {
                 module.dump()
