@@ -1,5 +1,6 @@
+#![allow(unused_imports)]
+
 extern crate llvm_sys;
-use llvm_sys::target;
 
 mod builder;
 mod module;
@@ -9,11 +10,12 @@ use builder::Builder;
 use module::Module;
 use function::Function;
 
-#[allow(non_camel_case_types)]
-#[derive(Debug)]
-pub struct LLVM;
+#[allow(non_snake_case)]
+pub mod LLVM {
+    use llvm_sys::core::*;
+    use llvm_sys::target;
+    use llvm_sys::prelude::*;
 
-impl LLVM {
     pub fn initialize(){
         unsafe {
             if target::LLVM_InitializeNativeTarget() != 0 {
@@ -22,6 +24,14 @@ impl LLVM {
             if target::LLVM_InitializeNativeAsmPrinter() != 0 {
                 panic!("Could not initialise ASM Printer");
             }
+        }
+    }
+
+    pub mod types {
+        use super::*;
+
+        pub fn Int32() -> LLVMTypeRef {
+            unsafe { LLVMInt32Type() }
         }
     }
 }
@@ -42,7 +52,7 @@ mod tests {
         // create our function prologue
         let function_type = unsafe {
             let mut param_types = [];
-            LLVMFunctionType(LLVMInt32Type(), param_types.as_mut_ptr(), param_types.len() as u32, 0)
+            LLVMFunctionType(LLVM::types::Int32(), param_types.as_mut_ptr(), param_types.len() as u32, 0)
         };
 
         let function = Function::new(builder.as_ref(), module.as_ref(), "main", function_type);
