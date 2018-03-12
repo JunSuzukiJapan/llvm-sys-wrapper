@@ -5,11 +5,15 @@ mod builder;
 mod module;
 mod function;
 
+use builder::Builder;
+use module::Module;
+use function::Function;
+
 #[allow(non_camel_case_types)]
 #[derive(Debug)]
-pub struct LLVM_WRAPPER;
+pub struct LLVM;
 
-impl LLVM_WRAPPER {
+impl LLVM {
     pub fn initialize(){
         unsafe {
             if target::LLVM_InitializeNativeTarget() != 0 {
@@ -29,11 +33,11 @@ mod tests {
 
     #[test]
     fn it_works() {
-        LLVM_WRAPPER::initialize();
+        LLVM::initialize();
 
         // setup our builder and module
-        let builder = builder::Builder::new();
-        let module = module::Module::new(builder.as_ref(), "my_module");
+        let builder = Builder::new();
+        let module = Module::new(builder.as_ref(), "my_module");
 
         // create our function prologue
         let function_type = unsafe {
@@ -41,7 +45,7 @@ mod tests {
             LLVMFunctionType(LLVMInt32Type(), param_types.as_mut_ptr(), param_types.len() as u32, 0)
         };
 
-        let function = function::Function::new(builder.as_ref(), module.as_ref(), "main", function_type);
+        let function = Function::new(builder.as_ref(), module.as_ref(), "main", function_type);
         let entry_block = function.append_basic_block("entry");
         builder.position_at_end(entry_block);
 
