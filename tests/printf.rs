@@ -2,11 +2,10 @@
 extern crate llvm_sys_wrapper;
 
 use llvm_sys_wrapper::*;
+use LLVM::Type;
 
 #[test]
 fn test_puts() {
-    use LLVM::Type;
-
     LLVM::initialize();
 
     // create context
