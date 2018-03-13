@@ -6,6 +6,7 @@ use LLVM::Type;
 
 #[test]
 fn test_puts() {
+    // initialize LLVM
     LLVM::initialize();
 
     // create context
@@ -21,15 +22,18 @@ fn test_puts() {
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
+    // setup strings
     let hello = builder.build_global_string_ptr("Hello, %s\n", "hello_str");
     let world = builder.build_global_string_ptr("world!", "world_str");
 
+    // setup printf function
     let printf_type = fn_type!(Type::Int32(), Type::CharPointer() ,,,);
     let printf_func = module.add_function("printf", printf_type);
 
+    // call printf function
     let mut args = [hello, world];
     let _call = builder.build_call(printf_func.as_ref(), args.as_mut_ptr(), args.len() as u32, "call_printf");
-
+    // ret void
     let _ret = builder.build_ret_void();
 
     // verify & dump
