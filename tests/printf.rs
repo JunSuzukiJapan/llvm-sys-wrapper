@@ -12,7 +12,7 @@ fn test_puts() {
 
     // setup our builder and module
     let builder = Builder::new();
-    let module = Module::with_context(builder.as_ref(), "call_printf", context);
+    let module = Module::with_context("call_printf", context);
 
     // create main function and entry point
     let fun_type = fn_type!(LLVM::Type::Void());

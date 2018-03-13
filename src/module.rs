@@ -11,25 +11,22 @@ use function;
 
 #[derive(Debug)]
 pub struct Module {
-    llvm_builder: LLVMBuilderRef,
     llvm_module: LLVMModuleRef
 }
 
 impl Module {
-    pub fn new(builder: LLVMBuilderRef, name: &str) -> Module {
+    pub fn new(name: &str) -> Module {
         let mod_name = CString::new(name).unwrap();
         let module = unsafe { LLVMModuleCreateWithName(mod_name.as_ptr()) };
         Module {
-            llvm_builder: builder,
             llvm_module: module
         }
     }
 
-    pub fn with_context(builder: LLVMBuilderRef, name: &str, context: LLVMContextRef) -> Module {
+    pub fn with_context(name: &str, context: LLVMContextRef) -> Module {
         let mod_name = CString::new(name).unwrap();
         let module = unsafe { LLVMModuleCreateWithNameInContext(mod_name.as_ptr(), context) };
         Module {
-            llvm_builder: builder,
             llvm_module: module
         }
     }

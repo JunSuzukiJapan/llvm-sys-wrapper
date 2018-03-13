@@ -9,7 +9,7 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
 
     // setup our builder and module
     let builder = Builder::new();
-    let module = Module::new(builder.as_ref(), "my_module");
+    let module = Module::new("my_module");
 
     // create our function prologue
     let fun_type = fn_type!(LLVM::Type::Int32());

@@ -12,7 +12,7 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
 
     // setup our builder and module
     let builder = Builder::new();
-    let module = Module::with_context(builder.as_ref(), "call_puts", context);
+    let module = Module::with_context("call_puts", context);
 
     // create main function and entry point
     let fun_type = fn_type!(LLVM::Type::Void());
