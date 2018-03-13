@@ -33,9 +33,7 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
 
     // verify & dump
     match module.verify() {
-        Ok(_) => {
-            module.dump()
-        },
+        Ok(_) => module.dump(),
         Err(msg) => panic!("Error: {}", msg)
     }
 }

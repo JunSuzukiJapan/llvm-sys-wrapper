@@ -34,9 +34,7 @@ fn test_puts() {
 
     // verify & dump
     match module.verify() {
-        Ok(_) => {
-            module.dump()
-        },
+        Ok(_) => module.dump(),
         Err(msg) => panic!("Error: {}", msg)
     }
 }

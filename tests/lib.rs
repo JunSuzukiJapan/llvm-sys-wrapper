@@ -37,9 +37,7 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
 
     // verify & dump
     match module.verify() {
-        Ok(_) => {
-            module.dump()
-        },
+        Ok(_) => module.dump(),
         Err(msg) => panic!("Error: {}", msg)
     }
 }
