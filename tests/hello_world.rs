@@ -5,6 +5,8 @@ use llvm_sys_wrapper::*;
 
 #[test]
 fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜](http://blog.64p.org/entry/2012/07/18/172418)
+    use LLVM::Type;
+
     LLVM::initialize();
 
     // create context
@@ -15,14 +17,14 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
     let module = Module::new_in_context("call_puts", context);
 
     // create main function and entry point
-    let fun_type = fn_type!(LLVM::Type::Void());
+    let fun_type = fn_type!(Type::Void());
     let function = module.add_function("main", fun_type);
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
     let helloworld = builder.build_global_string_ptr("Hello, world!", "hello_world_str");
 
-    let puts_type = fn_type!(LLVM::Type::Int32(), LLVM::Type::PointerType(LLVM::Type::Int8(), 0) );
+    let puts_type = fn_type!(Type::Int32(), Type::PointerType(Type::Int8(), 0) );
     let puts_func = module.add_function("puts", puts_type);
 
     let mut args = [helloworld];
