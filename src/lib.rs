@@ -146,7 +146,7 @@ pub mod LLVM {
 }
 
 #[macro_export]
-macro_rules! function_type {
+macro_rules! fn_type {
     ($result_type:expr) => (
         unsafe {
             let mut param_types = [];

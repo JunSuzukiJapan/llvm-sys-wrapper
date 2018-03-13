@@ -12,7 +12,7 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
     let module = Module::new(builder.as_ref(), "my_module");
 
     // create our function prologue
-    let fun_type = function_type!(LLVM::Type::Int32());
+    let fun_type = fn_type!(LLVM::Type::Int32());
     let function = Function::new(builder.as_ref(), module.as_ref(), "main", fun_type);
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);

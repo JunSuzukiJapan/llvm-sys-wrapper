@@ -15,7 +15,7 @@ fn test_puts() {
     let module = Module::with_context(builder.as_ref(), "call_printf", context);
 
     // create main function and entry point
-    let fun_type = function_type!(LLVM::Type::Void());
+    let fun_type = fn_type!(LLVM::Type::Void());
     let function = Function::new(builder.as_ref(), module.as_ref(), "main", fun_type);
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
@@ -23,7 +23,7 @@ fn test_puts() {
     let hello = builder.build_global_string_ptr("Hello, %s\n", "hello_str");
     let world = builder.build_global_string_ptr("world!", "world_str");
 
-    let printf_type = function_type!(LLVM::Type::Int32(), LLVM::Type::PointerType(LLVM::Type::Int8(), 0) ,,,);
+    let printf_type = fn_type!(LLVM::Type::Int32(), LLVM::Type::PointerType(LLVM::Type::Int8(), 0) ,,,);
     let printf_func = Function::new(builder.as_ref(), module.as_ref(), "printf", printf_type);
 
     let mut args = [hello, world];
