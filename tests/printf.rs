@@ -4,7 +4,7 @@ extern crate llvm_sys_wrapper;
 use llvm_sys_wrapper::*;
 
 #[test]
-fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜](http://blog.64p.org/entry/2012/07/18/172418)
+fn test_puts() {
     LLVM::initialize();
 
     // create context
@@ -12,7 +12,7 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
 
     // setup our builder and module
     let builder = Builder::new();
-    let module = Module::with_context(builder.as_ref(), "call_puts", context);
+    let module = Module::with_context(builder.as_ref(), "call_printf", context);
 
     // create main function and entry point
     let fun_type = function_type!(LLVM::Type::Void());
@@ -20,13 +20,14 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
-    let helloworld = builder.build_global_string_ptr("Hello, world!", "hello_world_str");
+    let hello = builder.build_global_string_ptr("Hello, %s\n", "hello_str");
+    let world = builder.build_global_string_ptr("world!", "world_str");
 
-    let puts_type = function_type!(LLVM::Type::Int32(), LLVM::Type::PointerType(LLVM::Type::Int8(), 0) );
-    let puts_func = Function::new(builder.as_ref(), module.as_ref(), "puts", puts_type);
+    let printf_type = function_type!(LLVM::Type::Int32(), LLVM::Type::PointerType(LLVM::Type::Int8(), 0) ,,,);
+    let printf_func = Function::new(builder.as_ref(), module.as_ref(), "printf", printf_type);
 
-    let mut args = [helloworld];
-    let _call = builder.build_call(puts_func.as_ref(), args.as_mut_ptr(), args.len() as u32, "call_puts");
+    let mut args = [hello, world];
+    let _call = builder.build_call(printf_func.as_ref(), args.as_mut_ptr(), args.len() as u32, "call_printf");
 
     let _ret = builder.build_ret_void();
 
