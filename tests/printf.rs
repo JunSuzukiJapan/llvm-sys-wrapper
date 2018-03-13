@@ -24,7 +24,7 @@ fn test_puts() {
     let hello = builder.build_global_string_ptr("Hello, %s\n", "hello_str");
     let world = builder.build_global_string_ptr("world!", "world_str");
 
-    let printf_type = fn_type!(Type::Int32(), Type::PointerType(Type::Int8(), 0) ,,,);
+    let printf_type = fn_type!(Type::Int32(), Type::CharPointer() ,,,);
     let printf_func = module.add_function("printf", printf_type);
 
     let mut args = [hello, world];

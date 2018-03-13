@@ -82,6 +82,9 @@ pub mod LLVM {
         pub fn Label() -> LLVMTypeRef {
             unsafe { LLVMLabelType() }
         }
+        pub fn CharPointer() -> LLVMTypeRef {
+            Type::PointerType(Type::Int8(), 0)
+        }
     }
 
     pub mod Const {

@@ -23,7 +23,7 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
 
     let helloworld = builder.build_global_string_ptr("Hello, world!", "hello_world_str");
 
-    let puts_type = fn_type!(Type::Int32(), Type::PointerType(Type::Int8(), 0) );
+    let puts_type = fn_type!(Type::Int32(), Type::CharPointer());
     let puts_func = module.add_function("puts", puts_type);
 
     let mut args = [helloworld];
