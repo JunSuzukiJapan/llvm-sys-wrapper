@@ -18,6 +18,11 @@ impl Builder {
         Builder { llvm_builder: builder }
     }
 
+    pub fn new_in_context(context: LLVMContextRef) -> Builder {
+        let builder = unsafe { LLVMCreateBuilderInContext(context) };
+        Builder { llvm_builder: builder }
+    }
+
     pub fn as_ref(&self) -> LLVMBuilderRef {
         self.llvm_builder
     }

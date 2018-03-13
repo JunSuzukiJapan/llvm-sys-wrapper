@@ -11,7 +11,7 @@ fn test_puts() {
     let context = Context::global_context();
 
     // setup our builder and module
-    let builder = Builder::new();
+    let builder = Builder::new_in_context(context);
     let module = Module::new_in_context("call_printf", context);
 
     // create main function and entry point
