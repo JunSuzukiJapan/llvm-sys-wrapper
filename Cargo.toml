@@ -1,7 +1,12 @@
 [package]
 name = "llvm-sys-wrapper"
 version = "0.1.0"
-authors = ["JunSuzukiJapan <jun.suzuki.japan@gmail.com>"]
+authors = ["Jun Suzuki <jun.suzuki.japan@gmail.com>"]
+repository = "https://github.com/JunSuzukiJapan/llvm-sys-wrapper"
+keywords = ["llvm"]
+license-file = "LICENSE"
+readme = "README.md"
+description = "Shallow wrapper for llvm-sys."
 
 [dependencies]
 llvm-sys = "50"
