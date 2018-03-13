@@ -21,8 +21,8 @@ extern crate llvm_sys_wrapper;
 
 # Examples
 
-Look [tests directory](tests).
+Look [tests directory](https://github.com/JunSuzukiJapan/llvm-sys-wrapper/tree/master/tests).
 
 # License
 
-[MIT](LICENSE)
+[MIT](https://github.com/JunSuzukiJapan/llvm-sys-wrapper/blob/master/LICENSE)
