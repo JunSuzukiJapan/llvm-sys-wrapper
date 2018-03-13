@@ -39,7 +39,7 @@ impl Module {
     }
 
     pub fn add_function(&self, name: &str, function_type: LLVMTypeRef) -> function::Function {
-        function::Function::new(self.llvm_builder, self.llvm_module, name, function_type)
+        function::Function::new(self.llvm_module, name, function_type)
     }
 
     pub fn verify(&self) -> Result<(), String> {

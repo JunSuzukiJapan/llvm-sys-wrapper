@@ -8,16 +8,14 @@ use std::ffi::CString;
 
 #[derive(Debug)]
 pub struct Function {
-    llvm_builder: LLVMBuilderRef,
     llvm_function: LLVMValueRef
 }
 
 impl Function {
-    pub fn new(builder: LLVMBuilderRef, module: LLVMModuleRef, name: &str, function_type: LLVMTypeRef) -> Function {
+    pub fn new(module: LLVMModuleRef, name: &str, function_type: LLVMTypeRef) -> Function {
         let function_name = CString::new(name).unwrap();
         let function = unsafe { LLVMAddFunction(module, function_name.as_ptr(), function_type) };
         Function {
-            llvm_builder: builder,
             llvm_function: function
         }
     }
