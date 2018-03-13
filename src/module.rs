@@ -23,7 +23,7 @@ impl Module {
         }
     }
 
-    pub fn with_context(name: &str, context: LLVMContextRef) -> Module {
+    pub fn new_in_context(name: &str, context: LLVMContextRef) -> Module {
         let mod_name = CString::new(name).unwrap();
         let module = unsafe { LLVMModuleCreateWithNameInContext(mod_name.as_ptr(), context) };
         Module {
