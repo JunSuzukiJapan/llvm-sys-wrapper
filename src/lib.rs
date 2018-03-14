@@ -204,6 +204,68 @@ pub mod LLVM {
         pub fn PPCFP128(val: f64) -> LLVMValueRef {
             unsafe { LLVMConstReal(LLVMPPCFP128Type(), val) }
         }
+
+        pub fn SIntInContext(context: LLVMContextRef, num_bits: c_uint, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMIntTypeInContext(context, num_bits), val, 1) }
+        }
+        pub fn UIntInContext(context: LLVMContextRef, num_bits: c_uint, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMIntTypeInContext(context, num_bits), val, 0) }
+        }
+        pub fn SInt1InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt1TypeInContext(context), val, 1) }
+        }
+        pub fn UInt1InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt1TypeInContext(context), val, 0) }
+        }
+        pub fn SInt8InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt8TypeInContext(context), val, 1) }
+        }
+        pub fn UInt8InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt8TypeInContext(context), val, 0) }
+        }
+        pub fn SInt16InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt16TypeInContext(context), val, 1) }
+        }
+        pub fn UInt16InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt16TypeInContext(context), val, 0) }
+        }
+        pub fn SInt32InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt32TypeInContext(context), val, 1) }
+        }
+        pub fn UInt32InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt32TypeInContext(context), val, 0) }
+        }
+        pub fn SInt64InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt64TypeInContext(context), val, 1) }
+        }
+        pub fn UInt64InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt64TypeInContext(context), val, 0) }
+        }
+        pub fn SInt128InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt128TypeInContext(context), val, 1) }
+        }
+        pub fn UInt128InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMInt128TypeInContext(context), val, 0) }
+        }
+
+        pub fn HalfInContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMHalfTypeInContext(context), val) }
+        }
+        pub fn FloatInContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMFloatTypeInContext(context), val) }
+        }
+        pub fn DoubleInContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMDoubleTypeInContext(context), val) }
+        }
+        pub fn FP128InContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMFP128TypeInContext(context), val) }
+        }
+        pub fn X86FP80InContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMX86FP80TypeInContext(context), val) }
+        }
+        pub fn PPCFP128InContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
+            unsafe { LLVMConstReal(LLVMPPCFP128TypeInContext(context), val) }
+        }
     }
 }
 
