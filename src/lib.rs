@@ -143,6 +143,12 @@ pub mod LLVM {
     pub mod Const {
         use super::*;
 
+        pub fn SInt(num_bits: c_uint, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMIntType(num_bits), val, 1) }
+        }
+        pub fn UInt(num_bits: c_uint, val: u64) -> LLVMValueRef {
+            unsafe { LLVMConstInt(LLVMIntType(num_bits), val, 0) }
+        }
         pub fn SInt1(val: u64) -> LLVMValueRef {
             unsafe { LLVMConstInt(LLVMInt1Type(), val, 1) }
         }
