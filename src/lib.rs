@@ -41,6 +41,9 @@ pub mod LLVM {
         pub fn Void() -> LLVMTypeRef {
             unsafe { LLVMVoidType() }
         }
+        pub fn Int(num_bits: c_uint) -> LLVMTypeRef {
+            unsafe { LLVMIntType(num_bits) }
+        }
         pub fn Int1() -> LLVMTypeRef {
             unsafe { LLVMInt1Type() }
         }
