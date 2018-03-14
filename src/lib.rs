@@ -4,6 +4,7 @@ mod builder;
 mod module;
 mod function;
 mod context;
+mod engine;
 
 pub use self::llvm_sys::core::*;
 pub use self::llvm_sys::prelude::*;

@@ -8,6 +8,7 @@ use self::llvm_sys::analysis::{LLVMVerifyModule, LLVMVerifierFailureAction};
 use std::ffi::CString;
 use std::os::raw::c_char;
 use function;
+use engine::Engine;
 
 #[derive(Debug)]
 pub struct Module {
@@ -39,6 +40,12 @@ impl Module {
         function::Function::new(self.llvm_module, name, function_type)
     }
 
+    pub fn named_function(&self, name: &str) -> function::Function {
+        let func_name = CString::new(name).unwrap();
+        let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name.as_ptr()) };
+        function::Function::from_ptr(named_function)
+    }
+
     pub fn verify(&self) -> Result<(), String> {
         let mut error: *mut c_char = 0 as *mut c_char;
         let ok = unsafe {
@@ -55,6 +62,10 @@ impl Module {
 
     pub fn dump(&self){
         unsafe { LLVMDumpModule(self.llvm_module) }
+    }
+
+    pub fn create_interpreter(&self) -> Result<Engine, String> {
+        Engine::create_interpreter(self.as_ref())
     }
 }
 

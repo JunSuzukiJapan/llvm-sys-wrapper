@@ -20,6 +20,12 @@ impl Function {
         }
     }
 
+    pub fn from_ptr(func_ptr: LLVMValueRef) -> Function {
+        Function {
+            llvm_function: func_ptr
+        }
+    }
+
     pub fn append_basic_block(&self, name: &str) -> LLVMBasicBlockRef {
         let label_name = CString::new(name).unwrap();
         unsafe { LLVMAppendBasicBlock(self.llvm_function, label_name.as_ptr()) }
