@@ -1,9 +1,12 @@
 extern crate llvm_sys;
+extern crate libc;
 
 use self::llvm_sys::prelude::*;
 use self::llvm_sys::execution_engine::*;
 use std::ffi::CString;
-use std::os::raw::{c_char, c_ulonglong};
+use std::os::raw::{c_char, c_ulonglong, c_uint};
+use self::libc::c_void;
+use LLVM::Type;
 
 #[derive(Debug)]
 pub struct Engine {
@@ -55,5 +58,21 @@ impl FuncallResult {
 
     pub fn to_int(&self) -> c_ulonglong {
         unsafe { LLVMGenericValueToInt(self.value, 0) }
+    }
+
+    pub fn int_width(&self) -> c_uint {
+        unsafe { LLVMGenericValueIntWidth(self.value) }
+    }
+
+    pub fn to_ptr(&self) -> *mut c_void {
+        unsafe { LLVMGenericValueToPointer(self.value) }
+    }
+
+    pub fn to_float(&self) -> f32 {
+        unsafe { LLVMGenericValueToFloat(Type::Float(), self.value) as f32 }
+    }
+
+    pub fn to_double(&self) -> f64 {
+        unsafe { LLVMGenericValueToFloat(Type::Double(), self.value) }
     }
 }

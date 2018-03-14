@@ -86,6 +86,55 @@ pub mod LLVM {
         pub fn CharPointer() -> LLVMTypeRef {
             Type::PointerType(Type::Int8(), 0)
         }
+
+        pub fn IntInContext(context: LLVMContextRef, num_bits: c_uint) -> LLVMTypeRef {
+            unsafe { LLVMIntTypeInContext(context, num_bits) }
+        }
+        pub fn HalfInContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMHalfTypeInContext(context) }
+        }
+        pub fn Int1InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMInt1TypeInContext(context) }
+        }
+        pub fn Int8InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMInt8TypeInContext(context) }
+        }
+        pub fn VoidInContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMVoidTypeInContext(context) }
+        }
+        pub fn FloatInContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMFloatTypeInContext(context) }
+        }
+        pub fn FP128InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMFP128TypeInContext(context) }
+        }
+        pub fn Int16InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMInt16TypeInContext(context) }
+        }
+        pub fn Int32InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMInt32TypeInContext(context) }
+        }
+        pub fn Int64InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMInt64TypeInContext(context) }
+        }
+        pub fn LabelInContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMLabelTypeInContext(context) }
+        }
+        pub fn DoubleInContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMDoubleTypeInContext(context) }
+        }
+        pub fn Int128InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMInt128TypeInContext(context) }
+        }
+        pub fn X86MMXInContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMX86MMXTypeInContext(context) }
+        }
+        pub fn X86FP80InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMX86FP80TypeInContext(context) }
+        }
+        pub fn PPCFP128InContext(context: LLVMContextRef) -> LLVMTypeRef {
+            unsafe { LLVMPPCFP128TypeInContext(context) }
+        }
     }
 
     pub mod Const {
