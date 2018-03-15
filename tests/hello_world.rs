@@ -26,7 +26,7 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
     let puts_func = module.add_function("puts", puts_type);
 
     let mut args = [helloworld];
-    let _call = builder.build_call(puts_func.as_ref(), args.as_mut_ptr(), args.len() as u32, "call_puts");
+    let _call = builder.build_call(puts_func.as_ref(), &mut args, "call_puts");
 
     let _ret = builder.build_ret_void();
 

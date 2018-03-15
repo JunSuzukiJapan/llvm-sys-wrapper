@@ -5,7 +5,6 @@ extern crate llvm_sys;
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
 use std::ffi::CString;
-use std::os::raw::c_uint;
 
 #[derive(Debug)]
 pub struct Builder {
@@ -94,9 +93,9 @@ impl Builder {
         unsafe { LLVMBuildGlobalStringPtr(self.llvm_builder, val_str.as_ptr(), val_name.as_ptr()) }
     }
 
-    pub fn build_call(&self, func: LLVMValueRef, args: *mut LLVMValueRef, num_args: c_uint, name: &str) -> LLVMValueRef {
+    pub fn build_call(&self, func: LLVMValueRef, params:  &mut [LLVMValueRef], name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
-        unsafe { LLVMBuildCall(self.llvm_builder, func, args, num_args, val_name.as_ptr()) }
+        unsafe { LLVMBuildCall(self.llvm_builder, func, params.as_mut_ptr(), params.len() as u32, val_name.as_ptr()) }
     }
 }
 

@@ -32,7 +32,7 @@ fn test_puts() {
 
     // call printf function
     let mut args = [hello, world];
-    let _call = builder.build_call(printf_func.as_ref(), args.as_mut_ptr(), args.len() as u32, "call_printf");
+    let _call = builder.build_call(printf_func.as_ref(), &mut args, "call_printf");
     // ret void
     let _ret = builder.build_ret_void();
 
