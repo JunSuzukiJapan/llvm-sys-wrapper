@@ -279,6 +279,14 @@ impl Builder {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildCall(self.llvm_builder, func, params.as_mut_ptr(), params.len() as u32, val_name.as_ptr()) }
     }
+
+    pub fn build_br(&self, dest_block: LLVMBasicBlockRef) -> LLVMValueRef {
+        unsafe { LLVMBuildBr(self.llvm_builder, dest_block) }
+    }
+
+    pub fn build_cond_br(&self, condition: LLVMValueRef, then_block: LLVMBasicBlockRef, else_block: LLVMBasicBlockRef) -> LLVMValueRef {
+        unsafe { LLVMBuildCondBr(self.llvm_builder, condition, then_block, else_block) }
+    }
 }
 
 impl Drop for Builder {
