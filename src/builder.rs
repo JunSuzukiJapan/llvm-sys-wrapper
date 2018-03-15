@@ -305,82 +305,146 @@ impl Builder {
         unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntSLE, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_predicate_false(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_predicate_false(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_predicate_false_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_predicate_false_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealPredicateFalse, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_predicate_true(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_predicate_true(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_predicate_true_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_predicate_true_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealPredicateTrue, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ord(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ord(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ord_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ord_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealORD, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_oeq(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_oeq(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_oeq_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_oeq_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealOEQ, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_one(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_one(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_one_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_one_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealONE, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ogt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ogt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ogt_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ogt_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealOGT, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_oge(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_oge(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_oge_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_oge_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealOGE, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_olt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_olt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_olt_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_olt_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealOLT, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ole(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ole(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ole_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ole_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealOLE, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_uno(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_uno(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_uno_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_uno_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealUNO, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ueq(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ueq(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ueq_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ueq_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealUEQ, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_une(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_une(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_une_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_une_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealUNE, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ugt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ugt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ugt_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ugt_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealUGT, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_uge(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_uge(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_uge_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_uge_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealUGE, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ult(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ult(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ult_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ult_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealULT, lhs, rhs, val_name.as_ptr()) }
     }
 
-    pub fn build_fcmp_ule(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn build_fcmp_ule(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fcmp_ule_with_name(lhs, rhs, "")
+    }
+
+    pub fn build_fcmp_ule_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildFCmp(self.llvm_builder, LLVMRealULE, lhs, rhs, val_name.as_ptr()) }
     }
