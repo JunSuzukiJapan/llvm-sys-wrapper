@@ -112,6 +112,16 @@ impl Builder {
         unsafe { LLVMBuildLShr(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
     }
 
+    pub fn build_not(&self, value: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildNot(self.llvm_builder, value, val_name.as_ptr()) }
+    }
+
+    pub fn build_is_not_null(&self, value: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildIsNotNull(self.llvm_builder, value, val_name.as_ptr()) }
+    }
+
     pub fn build_global_string_ptr(&self, string: &str, name: &str) -> LLVMValueRef {
         let val_str = CString::new(string).unwrap();
         let val_name = CString::new(name).unwrap();
