@@ -484,6 +484,15 @@ impl Builder {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildSExt(self.llvm_builder, value, dest_type, val_name.as_ptr()) }
     }
+
+    pub fn build_inbounds_gep(&self, target: LLVMValueRef, indices: &mut [LLVMValueRef]) -> LLVMValueRef {
+        self.build_inbounds_gep_with_name(target, indices, "")
+    }
+
+    pub fn build_inbounds_gep_with_name(&self, target: LLVMValueRef, indices: &mut [LLVMValueRef], name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildInBoundsGEP(self.llvm_builder, target, indices.as_mut_ptr(), indices.len() as u32, val_name.as_ptr()) }
+    }
 }
 
 impl Drop for Builder {

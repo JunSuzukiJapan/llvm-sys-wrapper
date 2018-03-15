@@ -1,0 +1,7 @@
+[package]
+name = "brainhack"
+version = "0.1.0"
+authors = ["JunSuzukiJapan <jun.suzuki.japan@gmail.com>"]
+
+[dependencies]
+llvm-sys-wrapper = {path = "../../../llvm-sys-wrapper"}

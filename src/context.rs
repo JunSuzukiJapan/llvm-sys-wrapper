@@ -101,6 +101,9 @@ impl Context {
     pub fn CharPointerType(&self) -> LLVMTypeRef {
         Type::PointerType(self.Int8Type(), 0)
     }
+    pub fn Int8PointerType(&self) -> LLVMTypeRef {
+        Type::PointerType(self.Int8Type(), 0)
+    }
 
 
     pub fn SInt(&self, num_bits: c_uint, val: u64) -> LLVMValueRef {

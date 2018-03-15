@@ -89,6 +89,9 @@ pub mod LLVM {
         pub fn CharPointer() -> LLVMTypeRef {
             Type::PointerType(Type::Int8(), 0)
         }
+        pub fn Int8Pointer() -> LLVMTypeRef {
+            Type::PointerType(Type::Int8(), 0)
+        }
     }
 
     pub mod Const {
