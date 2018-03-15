@@ -3,7 +3,6 @@ extern crate llvm_sys_wrapper;
 extern crate llvm_sys;
 
 use llvm_sys_wrapper::*;
-use LLVM::Type;
 
 #[test]
 fn test_puts() {
@@ -18,7 +17,7 @@ fn test_puts() {
     let module = context.create_module("interpret");
 
     // create main function and entry point
-    let fun_type = fn_type!(Type::Void());
+    let fun_type = fn_type!(context.VoidType());
     let function = module.add_function("main", fun_type);
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
@@ -28,7 +27,7 @@ fn test_puts() {
     let world = builder.build_global_string_ptr("world!", "world_str");
 
     // setup printf function
-    let printf_type = fn_type!(Type::Int32(), Type::CharPointer() ,,,);  // Int32 printf(CharPointer, ...)
+    let printf_type = fn_type!(context.Int32Type(), context.CharPointerType() ,,,);  // Int32 printf(CharPointer, ...)
     let printf_func = module.add_function("printf", printf_type);
 
     // call printf function
