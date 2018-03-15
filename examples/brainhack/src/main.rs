@@ -92,7 +92,10 @@ impl Compiler {
     }
 
     fn dump(&self){
-        self.module.dump();
+        match self.module.verify() {
+            Ok(_) => self.module.dump(),
+            Err(msg) => panic!("Error: {}", msg),
+        }
     }
 
     #[allow(dead_code)]
@@ -123,10 +126,11 @@ fn main() {
     // alloca memory
     let (data, ptr) = compiler.init_memory();
 
-
+    // read input
     let mut buffer = String::new();
     io::stdin().read_to_string(&mut buffer);
 
+    // compile
     for ch in buffer.chars() {
         match ch {
             '>' => compiler.emit_move_ptr(ptr, 1),

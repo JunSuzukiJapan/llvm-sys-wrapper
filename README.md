@@ -8,7 +8,7 @@ include the following in your Cargo.toml file:
 
 ```
 [dependencies]
-llvm-sys-wrapper="0.1.0"
+llvm-sys-wrapper="0.1"
 ```
 
 And then import the library using:
@@ -21,7 +21,7 @@ extern crate llvm_sys_wrapper;
 
 # Examples
 
-Look [tests directory](https://github.com/JunSuzukiJapan/llvm-sys-wrapper/tree/master/tests).
+Look [tests directory](https://github.com/JunSuzukiJapan/llvm-sys-wrapper/tree/master/tests) and [example directory](https://github.com/JunSuzukiJapan/llvm-sys-wrapper/tree/master/examples).
 
 # License
 
