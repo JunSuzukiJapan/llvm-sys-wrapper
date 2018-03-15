@@ -31,11 +31,12 @@ impl Compiler {
         }
     }
 
-    fn create_main(&self){
+    fn create_main(&self) -> Function {
         let fun_type = fn_type!(self.ctx.VoidType());
-        let function = self.module.add_function("main", fun_type);
-        let entry_block = function.append_basic_block("entry");
+        let main_function = self.module.add_function("main", fun_type);
+        let entry_block = main_function.append_basic_block("entry");
         self.builder.position_at_end(entry_block);
+        main_function
     }
 
     fn init_memory(&self) -> (LLVMValueRef, LLVMValueRef) {
@@ -91,6 +92,25 @@ impl Compiler {
         let _ret = self.builder.build_ret_void();
     }
 
+    fn emit_while_start(&self, func: &Function, ptr: LLVMValueRef, chars: &mut std::str::Chars){
+        let cond_block = func.append_basic_block("while_cond");
+        let body_block = func.append_basic_block("while_body");
+        let end_block = func.append_basic_block("while_end");
+
+        self.builder.build_br(cond_block);
+        self.builder.position_at_end(cond_block);
+
+        let load = self.builder.build_load( self.builder.build_load(ptr) );
+        let cond = self.builder.build_icmp_ne(load, self.ctx.UInt8(0));
+        self.builder.build_cond_br(cond, body_block, end_block);
+        self.builder.position_at_end(body_block);
+
+        self.compile(func, ptr, chars);
+
+        self.builder.build_br(cond_block);
+        self.builder.position_at_end(end_block);
+    }
+
     fn dump(&self){
         match self.module.verify() {
             Ok(_) => self.module.dump(),
@@ -111,6 +131,21 @@ impl Compiler {
             Err(msg) => panic!("Error: {}", msg)
         }
     }
+
+    fn compile(&self, func: &Function, ptr: LLVMValueRef, chars: &mut std::str::Chars){
+        while let Some(ch) = chars.next() {
+            match ch {
+                '>' => self.emit_move_ptr(ptr, 1),
+                '<' => self.emit_move_ptr(ptr, -1),
+                '+' => self.emit_add(ptr, 1),
+                '-' => self.emit_add(ptr, -1),
+                '.' => self.emit_put(ptr),
+                '[' => self.emit_while_start(func, ptr, chars),
+                ']' => return,
+                _ => (),
+            }
+        }
+    }
 }
 
 #[allow(unused_must_use)]
@@ -122,7 +157,7 @@ fn main() {
     let compiler = Compiler::new("brainhack");
 
     // create main function and entry point
-    compiler.create_main();
+    let main = compiler.create_main();
     // alloca memory
     let (data, ptr) = compiler.init_memory();
 
@@ -131,16 +166,8 @@ fn main() {
     io::stdin().read_to_string(&mut buffer);
 
     // compile
-    for ch in buffer.chars() {
-        match ch {
-            '>' => compiler.emit_move_ptr(ptr, 1),
-            '<' => compiler.emit_move_ptr(ptr, -1),
-            '+' => compiler.emit_add(ptr, 1),
-            '-' => compiler.emit_add(ptr, -1),
-            '.' => compiler.emit_put(ptr),
-            _ => (),
-        }
-    }
+    let mut chars = buffer.chars();
+    compiler.compile(&main, ptr, &mut chars);
 
     // free memory
     compiler.free_memory(data);
