@@ -22,8 +22,8 @@ fn test_puts() {
     builder.position_at_end(entry_block);
 
     // setup strings
-    let hello = builder.build_global_string_ptr("Hello, %s\n", "hello_str");
-    let world = builder.build_global_string_ptr("world!", "world_str");
+    let hello = builder.build_global_string_ptr("Hello, %s\n");
+    let world = builder.build_global_string_ptr("world!");
 
     // setup printf function
     let printf_type = fn_type!(context.Int32Type(), context.CharPointerType() ,,,);  // Int32 printf(CharPointer, ...)
@@ -31,7 +31,7 @@ fn test_puts() {
 
     // call printf function
     let mut args = [hello, world];
-    let _call = builder.build_call(printf_func.as_ref(), &mut args, "call_printf");
+    let _call = builder.build_call(printf_func.as_ref(), &mut args);
     // ret void
     let _ret = builder.build_ret_void();
 

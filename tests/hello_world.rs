@@ -20,13 +20,13 @@ fn test_puts() {    // 参考: [llvm で Hello wolrd!! 〜llvm入門 その2〜]
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
-    let helloworld = builder.build_global_string_ptr("Hello, world!", "hello_world_str");
+    let helloworld = builder.build_global_string_ptr("Hello, world!");
 
     let puts_type = fn_type!(context.Int32Type(), context.CharPointerType());
     let puts_func = module.add_function("puts", puts_type);
 
     let mut args = [helloworld];
-    let _call = builder.build_call(puts_func.as_ref(), &mut args, "call_puts");
+    let _call = builder.build_call(puts_func.as_ref(), &mut args);
 
     let _ret = builder.build_ret_void();
 

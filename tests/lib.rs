@@ -9,7 +9,7 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
     LLVM::initialize();
 
     // setup our builder and module
-    let builder = Builder::new();
+    let mut builder = Builder::new();
     let module = Module::new("my_module");
 
     // create our function prologue
@@ -30,9 +30,9 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
     builder.build_store(const_b_value, b);
 
     // return a + b
-    let a_val = builder.build_load(a, "a_val");
-    let b_val = builder.build_load(b, "b_val");
-    let ab_val = builder.build_add(a_val, b_val, "ab_val");
+    let a_val = builder.build_load(a);
+    let b_val = builder.build_load(b);
+    let ab_val = builder.build_add(a_val, b_val);
     builder.build_ret(ab_val);
 
     // verify & dump
