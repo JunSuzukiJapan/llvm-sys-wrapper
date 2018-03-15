@@ -87,6 +87,16 @@ impl Builder {
         unsafe { LLVMBuildRetVoid(self.llvm_builder) }
     }
 
+    pub fn build_neg(&self, value: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildNeg(self.llvm_builder, value, val_name.as_ptr()) }
+    }
+
+    pub fn build_fneg(&self, value: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildFNeg(self.llvm_builder, value, val_name.as_ptr()) }
+    }
+
     pub fn build_global_string_ptr(&self, string: &str, name: &str) -> LLVMValueRef {
         let val_str = CString::new(string).unwrap();
         let val_name = CString::new(name).unwrap();
