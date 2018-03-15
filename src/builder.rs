@@ -287,6 +287,11 @@ impl Builder {
     pub fn build_cond_br(&self, condition: LLVMValueRef, then_block: LLVMBasicBlockRef, else_block: LLVMBasicBlockRef) -> LLVMValueRef {
         unsafe { LLVMBuildCondBr(self.llvm_builder, condition, then_block, else_block) }
     }
+
+    pub fn build_sext(&self, value: LLVMValueRef, dest_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildSExt(self.llvm_builder, value, dest_type, val_name.as_ptr()) }
+    }
 }
 
 impl Drop for Builder {
