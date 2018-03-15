@@ -4,6 +4,7 @@ extern crate llvm_sys;
 
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
+use self::llvm_sys::LLVMIntPredicate::*;
 use std::ffi::CString;
 
 #[derive(Debug)]
@@ -120,6 +121,56 @@ impl Builder {
     pub fn build_is_not_null(&self, value: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildIsNotNull(self.llvm_builder, value, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_eq(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntEQ, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_ne(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntNE, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_ugt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntUGT, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_uge(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntUGE, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_ult(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntULT, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_ule(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntULE, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_sgt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntSGT, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_sge(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntSGE, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_slt(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntSLT, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_icmp_sle(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntSLE, lhs, rhs, val_name.as_ptr()) }
     }
 
     pub fn build_global_string_ptr(&self, string: &str, name: &str) -> LLVMValueRef {
