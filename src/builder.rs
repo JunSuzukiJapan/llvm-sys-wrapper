@@ -45,7 +45,7 @@ impl Builder {
         unsafe { LLVMBuildStore(self.llvm_builder, val, ptr) }
     }
 
-    pub fn build_load(&mut self, pointer_val: LLVMValueRef) -> LLVMValueRef {
+    pub fn build_load(&self, pointer_val: LLVMValueRef) -> LLVMValueRef {
         self.build_load_with_name(pointer_val, "")
     }
 
@@ -54,7 +54,7 @@ impl Builder {
         unsafe { LLVMBuildLoad(self.llvm_builder, pointer_val, val_name.as_ptr()) }
     }
 
-    pub fn build_add(&mut self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+    pub fn build_add(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
         self.build_add_with_name(lhs, rhs, "")
     }
 

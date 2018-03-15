@@ -9,7 +9,7 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
     LLVM::initialize();
 
     // setup our builder and module
-    let mut builder = Builder::new();
+    let builder = Builder::new();
     let module = Module::new("my_module");
 
     // create our function prologue
