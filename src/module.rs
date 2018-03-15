@@ -49,7 +49,7 @@ impl Module {
     pub fn get_or_add_function(&self, name: &str, function_type: LLVMTypeRef) -> function::Function {
         let func_name = CString::new(name).unwrap();
         let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name.as_ptr()) };
-        if named_function == (0 as LLVMValueRef) {
+        if named_function.is_null() {
             function::Function::new(self.llvm_module, name, function_type)
         }else{
             function::Function::from_ptr(named_function)

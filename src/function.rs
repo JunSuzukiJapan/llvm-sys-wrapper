@@ -31,7 +31,7 @@ impl Function {
 
     pub fn append_basic_block(&self, name: &str) -> LLVMBasicBlockRef {
         let label_name = CString::new(name).unwrap();
-        if self.llvm_module == (0 as LLVMModuleRef) {
+        if self.llvm_module.is_null() {
             unsafe { LLVMAppendBasicBlock(self.llvm_function, label_name.as_ptr()) }
         }else{
             let context = unsafe { LLVMGetModuleContext(self.llvm_module) };
