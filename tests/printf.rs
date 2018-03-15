@@ -2,7 +2,6 @@
 extern crate llvm_sys_wrapper;
 
 use llvm_sys_wrapper::*;
-use LLVM::Type;
 
 #[test]
 fn test_puts() {
@@ -17,7 +16,7 @@ fn test_puts() {
     let module = context.create_module("call_printf");
 
     // create main function and entry point
-    let fun_type = fn_type!(Type::Void());
+    let fun_type = fn_type!(context.VoidType());
     let function = module.add_function("main", fun_type);
     let entry_block = function.append_basic_block("entry");
     builder.position_at_end(entry_block);
