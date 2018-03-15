@@ -10,4 +10,4 @@ description = "Shallow wrapper for llvm-sys."
 
 [dependencies]
 llvm-sys = "50"
-libc = "*"
+libc = "0.2"
