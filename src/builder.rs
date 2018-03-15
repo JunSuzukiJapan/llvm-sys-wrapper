@@ -89,6 +89,21 @@ impl Builder {
         unsafe { LLVMBuildRetVoid(self.llvm_builder) }
     }
 
+    pub fn build_and(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildAnd(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_or(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildOr(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_xor(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildXor(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
     pub fn build_neg(&self, value: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildNeg(self.llvm_builder, value, val_name.as_ptr()) }
@@ -173,13 +188,6 @@ impl Builder {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildICmp(self.llvm_builder, LLVMIntSLE, lhs, rhs, val_name.as_ptr()) }
     }
-
-    /*
-    LLVMRealUGT,
-    LLVMRealUGE,
-    LLVMRealULT,
-    LLVMRealULE,
-    */
 
     pub fn build_fcmp_predicate_false(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
