@@ -89,55 +89,6 @@ pub mod LLVM {
         pub fn CharPointer() -> LLVMTypeRef {
             Type::PointerType(Type::Int8(), 0)
         }
-
-        pub fn IntInContext(context: LLVMContextRef, num_bits: c_uint) -> LLVMTypeRef {
-            unsafe { LLVMIntTypeInContext(context, num_bits) }
-        }
-        pub fn HalfInContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMHalfTypeInContext(context) }
-        }
-        pub fn Int1InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMInt1TypeInContext(context) }
-        }
-        pub fn Int8InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMInt8TypeInContext(context) }
-        }
-        pub fn VoidInContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMVoidTypeInContext(context) }
-        }
-        pub fn FloatInContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMFloatTypeInContext(context) }
-        }
-        pub fn FP128InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMFP128TypeInContext(context) }
-        }
-        pub fn Int16InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMInt16TypeInContext(context) }
-        }
-        pub fn Int32InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMInt32TypeInContext(context) }
-        }
-        pub fn Int64InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMInt64TypeInContext(context) }
-        }
-        pub fn LabelInContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMLabelTypeInContext(context) }
-        }
-        pub fn DoubleInContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMDoubleTypeInContext(context) }
-        }
-        pub fn Int128InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMInt128TypeInContext(context) }
-        }
-        pub fn X86MMXInContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMX86MMXTypeInContext(context) }
-        }
-        pub fn X86FP80InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMX86FP80TypeInContext(context) }
-        }
-        pub fn PPCFP128InContext(context: LLVMContextRef) -> LLVMTypeRef {
-            unsafe { LLVMPPCFP128TypeInContext(context) }
-        }
     }
 
     pub mod Const {
@@ -203,68 +154,6 @@ pub mod LLVM {
         }
         pub fn PPCFP128(val: f64) -> LLVMValueRef {
             unsafe { LLVMConstReal(LLVMPPCFP128Type(), val) }
-        }
-
-        pub fn SIntInContext(context: LLVMContextRef, num_bits: c_uint, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMIntTypeInContext(context, num_bits), val, 1) }
-        }
-        pub fn UIntInContext(context: LLVMContextRef, num_bits: c_uint, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMIntTypeInContext(context, num_bits), val, 0) }
-        }
-        pub fn SInt1InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt1TypeInContext(context), val, 1) }
-        }
-        pub fn UInt1InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt1TypeInContext(context), val, 0) }
-        }
-        pub fn SInt8InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt8TypeInContext(context), val, 1) }
-        }
-        pub fn UInt8InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt8TypeInContext(context), val, 0) }
-        }
-        pub fn SInt16InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt16TypeInContext(context), val, 1) }
-        }
-        pub fn UInt16InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt16TypeInContext(context), val, 0) }
-        }
-        pub fn SInt32InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt32TypeInContext(context), val, 1) }
-        }
-        pub fn UInt32InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt32TypeInContext(context), val, 0) }
-        }
-        pub fn SInt64InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt64TypeInContext(context), val, 1) }
-        }
-        pub fn UInt64InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt64TypeInContext(context), val, 0) }
-        }
-        pub fn SInt128InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt128TypeInContext(context), val, 1) }
-        }
-        pub fn UInt128InContext(context: LLVMContextRef, val: u64) -> LLVMValueRef {
-            unsafe { LLVMConstInt(LLVMInt128TypeInContext(context), val, 0) }
-        }
-
-        pub fn HalfInContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
-            unsafe { LLVMConstReal(LLVMHalfTypeInContext(context), val) }
-        }
-        pub fn FloatInContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
-            unsafe { LLVMConstReal(LLVMFloatTypeInContext(context), val) }
-        }
-        pub fn DoubleInContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
-            unsafe { LLVMConstReal(LLVMDoubleTypeInContext(context), val) }
-        }
-        pub fn FP128InContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
-            unsafe { LLVMConstReal(LLVMFP128TypeInContext(context), val) }
-        }
-        pub fn X86FP80InContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
-            unsafe { LLVMConstReal(LLVMX86FP80TypeInContext(context), val) }
-        }
-        pub fn PPCFP128InContext(context: LLVMContextRef, val: f64) -> LLVMValueRef {
-            unsafe { LLVMConstReal(LLVMPPCFP128TypeInContext(context), val) }
         }
     }
 }

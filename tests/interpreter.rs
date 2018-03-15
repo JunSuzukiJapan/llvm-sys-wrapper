@@ -14,8 +14,8 @@ fn test_puts() {
     let context = Context::global_context();
 
     // setup our builder and module
-    let builder = Builder::new_in_context(context);
-    let module = Module::new_in_context("interpret", context);
+    let builder = Builder::new_in_context(context.as_ref());
+    let module = Module::new_in_context("interpret", context.as_ref());
 
     // create main function and entry point
     let fun_type = fn_type!(Type::Void());
