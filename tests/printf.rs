@@ -13,8 +13,8 @@ fn test_puts() {
     let context = Context::global_context();
 
     // setup our builder and module
-    let builder = Builder::new_in_context(context.as_ref());
-    let module = Module::new_in_context("call_printf", context.as_ref());
+    let builder = context.create_builder();
+    let module = context.create_module("call_printf");
 
     // create main function and entry point
     let fun_type = fn_type!(Type::Void());

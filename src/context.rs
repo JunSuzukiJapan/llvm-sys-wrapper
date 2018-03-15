@@ -6,6 +6,8 @@ use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
 use std::os::raw::c_uint;
 use LLVM::Type;
+use builder::Builder;
+use module::Module;
 
 #[derive(Debug)]
 pub struct Context {
@@ -37,6 +39,14 @@ impl Context {
 
     pub fn as_ref(&self) -> LLVMContextRef {
         self.llvm_context
+    }
+
+    pub fn create_builder(&self) -> Builder {
+        Builder::new_in_context(self.as_ref())
+    }
+
+    pub fn create_module(&self, name: &str) -> Module {
+        Module::new_in_context(name, self.as_ref())
     }
 
 
