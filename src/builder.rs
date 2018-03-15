@@ -97,6 +97,21 @@ impl Builder {
         unsafe { LLVMBuildFNeg(self.llvm_builder, value, val_name.as_ptr()) }
     }
 
+    pub fn build_shl(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildShl(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_ashr(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildAShr(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
+    pub fn build_lshr(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildLShr(self.llvm_builder, lhs, rhs, val_name.as_ptr()) }
+    }
+
     pub fn build_global_string_ptr(&self, string: &str, name: &str) -> LLVMValueRef {
         let val_str = CString::new(string).unwrap();
         let val_name = CString::new(name).unwrap();
