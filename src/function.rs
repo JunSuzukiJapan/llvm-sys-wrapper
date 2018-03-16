@@ -42,4 +42,12 @@ impl Function {
     pub fn as_ref(&self) -> LLVMValueRef {
         self.llvm_function
     }
+
+    pub fn get_param(&self, index: u32) -> LLVMValueRef {
+        unsafe { LLVMGetParam(self.llvm_function, index) }
+    }
+
+    pub fn params_count(&self) -> u32 {
+        unsafe { LLVMCountParams(self.llvm_function) }
+    }
 }

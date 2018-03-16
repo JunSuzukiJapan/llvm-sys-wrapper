@@ -468,6 +468,19 @@ impl Builder {
         unsafe { LLVMBuildCall(self.llvm_builder, func, params.as_mut_ptr(), params.len() as u32, val_name.as_ptr()) }
     }
 
+    pub fn build_tail_call(&self, func: LLVMValueRef, params:  &mut [LLVMValueRef]) -> LLVMValueRef {
+       self.build_tail_call_with_name(func, params, "")
+    }
+
+    pub fn build_tail_call_with_name(&self, func: LLVMValueRef, params:  &mut [LLVMValueRef], name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe {
+            let call = LLVMBuildCall(self.llvm_builder, func, params.as_mut_ptr(), params.len() as u32, val_name.as_ptr());
+            LLVMSetTailCall(call, 1); // set tail call opt
+            call
+        }
+    }
+
     pub fn build_br(&self, dest_block: LLVMBasicBlockRef) -> LLVMValueRef {
         unsafe { LLVMBuildBr(self.llvm_builder, dest_block) }
     }
