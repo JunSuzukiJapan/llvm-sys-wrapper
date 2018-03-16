@@ -36,6 +36,7 @@ fn test_tailcall() {
     let entry_block = fastcc_func.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
+    // load param to x
     let x = builder.build_alloca(context.Int32Type(), "x");
     let param = fastcc_func.get_param(0);
     builder.build_store(param, x);
@@ -58,7 +59,7 @@ fn test_tailcall() {
 
     // if true
     builder.position_at_end(then_block);
-    // ret void
+    // ret 1
     let _ret = builder.build_ret(context.SInt32(1));
 
     //
