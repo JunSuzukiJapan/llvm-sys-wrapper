@@ -5,6 +5,7 @@ mod module;
 mod function;
 mod context;
 mod engine;
+mod phi;
 
 pub use self::llvm_sys::core::*;
 pub use self::llvm_sys::prelude::*;
@@ -12,6 +13,7 @@ pub use self::builder::Builder;
 pub use self::module::Module;
 pub use self::function::Function;
 pub use self::context::Context;
+pub use self::phi::Phi;
 pub use self::llvm_sys::*;
 
 #[allow(non_snake_case)]
