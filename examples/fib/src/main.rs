@@ -29,27 +29,17 @@ fn main() {
     let arg = fib_func.get_param(0);
     let cond = builder.build_icmp_eq(arg, ctx.UInt64(0));
 
-    let then0 = fib_func.append_basic_block("then0");
     let else0 = fib_func.append_basic_block("else0");
     let end = fib_func.append_basic_block("end");
-    builder.build_cond_br(cond, then0, else0);
-
-    // then0
-    builder.position_at_end(then0);
-    builder.build_br(end);
+    builder.build_cond_br(cond, end, else0);
 
     // else0
     builder.position_at_end(else0);
 
     let cond = builder.build_icmp_eq(arg, ctx.UInt64(1));
 
-    let then1 = fib_func.append_basic_block("then1");
     let else1 = fib_func.append_basic_block("else1");
-    builder.build_cond_br(cond, then1, else1);
-
-    // then1
-    builder.position_at_end(then1);
-    builder.build_br(end);
+    builder.build_cond_br(cond, end, else1);
 
     // else1
     builder.position_at_end(else1);
@@ -66,8 +56,8 @@ fn main() {
     // end
     builder.position_at_end(end);
     let phi = builder.build_phi(ctx.Int64Type());
-    phi.add_incoming(ctx.UInt64(0), then0);
-    phi.add_incoming(ctx.UInt64(1), then1);
+    phi.add_incoming(ctx.UInt64(0), entry_block);
+    phi.add_incoming(ctx.UInt64(1), else0);
     phi.add_incoming(sum, else1);
 
     // return
