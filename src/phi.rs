@@ -18,6 +18,10 @@ impl Phi {
         }
     }
 
+    pub fn as_ref(&self) -> LLVMValueRef {
+        self.llvm_phi
+    }
+
     pub fn add_incoming(&self, value: LLVMValueRef, block: LLVMBasicBlockRef){
         let mut values = [value];
         let mut blocks = [block];

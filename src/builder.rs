@@ -6,6 +6,7 @@ use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
 use self::llvm_sys::LLVMIntPredicate::*;
 use self::llvm_sys::LLVMRealPredicate::*;
+use phi::Phi;
 use std::ffi::CString;
 
 #[derive(Debug)]
@@ -505,6 +506,14 @@ impl Builder {
     pub fn build_inbounds_gep_with_name(&self, target: LLVMValueRef, indices: &mut [LLVMValueRef], name: &str) -> LLVMValueRef {
         let val_name = CString::new(name).unwrap();
         unsafe { LLVMBuildInBoundsGEP(self.llvm_builder, target, indices.as_mut_ptr(), indices.len() as u32, val_name.as_ptr()) }
+    }
+
+    pub fn build_phi(&self, typ: LLVMTypeRef) -> Phi {
+        Phi::new(self.llvm_builder, typ, "")
+    }
+
+    pub fn build_phi_with_name(&self, typ: LLVMTypeRef, name: &str) -> Phi {
+        Phi::new(self.llvm_builder, typ, name)
     }
 }
 
