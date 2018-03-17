@@ -81,7 +81,7 @@ fn main() {
     let entry_block = main_func.append_basic_block("entry");
     builder.position_at_end(entry_block);
 
-    // call fib(100)
+    // call fib(10)
     let mut args = [ctx.UInt64(10)];
     let ret = builder.build_call(fib_func.as_ref(), &mut args);
 
