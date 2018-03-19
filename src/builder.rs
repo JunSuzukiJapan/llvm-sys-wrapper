@@ -81,6 +81,14 @@ impl Builder {
         unsafe { LLVMBuildLoad(self.llvm_builder, pointer_val, val_name.as_ptr()) }
     }
 
+    pub fn build_bitcast(&self, value: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        self.build_bitcast_with_name(value, to_type, "")
+    }
+
+    pub fn build_bitcast_with_name(&self, value: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        unsafe { LLVMBuildBitCast(self.llvm_builder, value, to_type, name.as_ptr() as *const i8) }
+    }
+
     pub fn build_add(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
         self.build_add_with_name(lhs, rhs, "")
     }

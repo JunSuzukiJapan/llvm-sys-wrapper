@@ -109,7 +109,9 @@ impl Context {
         Type::PointerType(typ, 0)
     }
 
-
+    pub fn Bitcast(&self, constant: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        unsafe { LLVMConstBitCast(constant, to_type) }
+    }
     pub fn SInt(&self, num_bits: c_uint, val: u64) -> LLVMValueRef {
         unsafe { LLVMConstInt(LLVMIntTypeInContext(self.llvm_context, num_bits), val, 1) }
     }
