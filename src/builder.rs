@@ -68,6 +68,14 @@ impl Builder {
         unsafe { LLVMBuildFree(self.llvm_builder, pointer) }
     }
 
+    pub fn build_struct_gep(&self, ptr: LLVMValueRef, index: u32) -> LLVMValueRef {
+        self.build_struct_gep_with_name(ptr, index, "")
+    }
+
+    pub fn build_struct_gep_with_name(&self, ptr: LLVMValueRef, index: u32, name: &str) -> LLVMValueRef {
+        unsafe { LLVMBuildStructGEP(self.llvm_builder, ptr, index, name.as_ptr() as *const i8) }
+    }
+
     pub fn build_store(&self, val: LLVMValueRef, ptr: LLVMValueRef) -> LLVMValueRef {
         unsafe { LLVMBuildStore(self.llvm_builder, val, ptr) }
     }

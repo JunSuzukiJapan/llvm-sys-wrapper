@@ -5,6 +5,7 @@ extern crate llvm_sys;
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
 use std::os::raw::c_uint;
+use std::ffi::CString;
 use LLVM::Type;
 use builder::Builder;
 use module::Module;
@@ -49,6 +50,25 @@ impl Context {
         Module::new_in_context(name, self.as_ref())
     }
 
+    //
+    // get Type
+    //
+    pub fn StructTypeNamed(&self, name: &str) -> LLVMTypeRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMStructCreateNamed(self.llvm_context, val_name.as_ptr()) }
+    }
+
+    pub fn StructType(&self, fields: &mut [LLVMTypeRef], packed: bool) -> LLVMTypeRef {
+        unsafe { LLVMStructTypeInContext(self.llvm_context, fields.as_mut_ptr(), fields.len() as u32, if packed {1}else{0}) }
+    }
+
+    pub fn SetStructBody(structType: LLVMTypeRef, fields: &mut [LLVMTypeRef], packed: bool){
+        unsafe { LLVMStructSetBody(structType, fields.as_mut_ptr(), fields.len() as u32, if packed {1}else{0}) }
+    }
+
+    pub fn ConstStruct(constantValues: &mut [LLVMValueRef], packed: bool) -> LLVMValueRef {
+        unsafe { LLVMConstStruct(constantValues.as_mut_ptr(), constantValues.len() as u32, if packed {1}else{0}) }
+    }
 
     pub fn VoidType(&self) -> LLVMTypeRef {
         unsafe { LLVMVoidTypeInContext(self.llvm_context) }
@@ -109,6 +129,9 @@ impl Context {
         Type::PointerType(typ, 0)
     }
 
+    //
+    // define Constant util
+    //
     pub fn Bitcast(&self, constant: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
         unsafe { LLVMConstBitCast(constant, to_type) }
     }
