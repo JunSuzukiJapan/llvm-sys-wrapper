@@ -37,7 +37,7 @@ fn test_tailcall() {
     builder.position_at_end(entry_block);
 
     // load param to x
-    let x = builder.build_alloca(context.Int32Type(), "x");
+    let x = builder.build_alloca(context.Int32Type());
     let param = fastcc_func.get_param(0);
     builder.build_store(param, x);
     let x_val = builder.build_load(x);

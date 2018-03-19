@@ -20,12 +20,12 @@ fn it_works() {    // 参考: [Go言語で利用するLLVM入門](https://postd.
 
     // int a = 32
     let int32_typ = Type::Int32();
-    let a = builder.build_alloca(int32_typ, "a");
+    let a = builder.build_alloca(int32_typ);
     let const_a_value = Const::SInt32(32);
     builder.build_store(const_a_value, a);
 
     // int b = 16
-    let b = builder.build_alloca(int32_typ, "b");
+    let b = builder.build_alloca(int32_typ);
     let const_b_value = Const::SInt32(16);
     builder.build_store(const_b_value, b);
 

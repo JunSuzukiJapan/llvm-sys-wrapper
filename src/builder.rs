@@ -37,9 +37,35 @@ impl Builder {
         unsafe { LLVMPositionBuilderAtEnd(self.llvm_builder, entry_block); }
     }
 
-    pub fn build_alloca(&self, typ: LLVMTypeRef, name: &str) -> LLVMValueRef {
+    pub fn build_alloca(&self, typ: LLVMTypeRef) -> LLVMValueRef {
+        self.build_alloca_with_name(typ, "")
+    }
+
+    pub fn build_alloca_with_name(&self, typ: LLVMTypeRef, name: &str) -> LLVMValueRef {
         let var_name = CString::new(name).unwrap();
         unsafe { LLVMBuildAlloca(self.llvm_builder, typ, var_name.as_ptr()) }
+    }
+
+    pub fn build_array_alloca(&self, typ: LLVMTypeRef, size: LLVMValueRef) -> LLVMValueRef {
+        self.build_array_alloca_with_name(typ, size, "")
+    }
+
+    pub fn build_array_alloca_with_name(&self, typ: LLVMTypeRef, size: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let var_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildArrayAlloca(self.llvm_builder, typ, size, var_name.as_ptr()) }
+    }
+
+    pub fn build_array_malloc(&self, typ: LLVMTypeRef, size: LLVMValueRef) -> LLVMValueRef {
+        self.build_array_malloc_with_name(typ, size, "")
+    }
+
+    pub fn build_array_malloc_with_name(&self, typ: LLVMTypeRef, size: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let var_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildArrayMalloc(self.llvm_builder, typ, size, var_name.as_ptr()) }
+    }
+
+    pub fn build_free(&self, pointer: LLVMValueRef) -> LLVMValueRef {
+        unsafe { LLVMBuildFree(self.llvm_builder, pointer) }
     }
 
     pub fn build_store(&self, val: LLVMValueRef, ptr: LLVMValueRef) -> LLVMValueRef {

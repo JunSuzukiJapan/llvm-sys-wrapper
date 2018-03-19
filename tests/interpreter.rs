@@ -38,13 +38,15 @@ fn test_puts() {
 
     // verify & dump
     match module.verify() {
-        Ok(_) => module.dump(),
+        Ok(_) => {
+            module.dump();
+
+            let interperter = module.create_interpreter().unwrap();
+            let named_function = module.named_function("main");
+            let mut params = [];
+            let run_result = interperter.run_function(named_function.as_ref(), &mut params);
+            let _ = run_result.to_int();
+        },
         Err(msg) => panic!("Error: {}", msg)
     }
-
-    let interperter = module.create_interpreter().unwrap();
-    let named_function = module.named_function("main");
-    let mut params = [];
-    let run_result = interperter.run_function(named_function.as_ref(), &mut params);
-    let _ = run_result.to_int();
 }

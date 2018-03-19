@@ -9,7 +9,8 @@ use std::ffi::CString;
 #[derive(Debug)]
 pub struct Function {
     llvm_function: LLVMValueRef,
-    llvm_module: LLVMModuleRef
+    llvm_module: LLVMModuleRef,
+    function_type: LLVMTypeRef,
 }
 
 impl Function {
@@ -18,14 +19,16 @@ impl Function {
         let function = unsafe { LLVMAddFunction(module, function_name.as_ptr(), function_type) };
         Function {
             llvm_function: function,
-            llvm_module: module
+            llvm_module: module,
+            function_type: function_type
         }
     }
 
     pub fn from_ptr(func_ptr: LLVMValueRef) -> Function {
         Function {
             llvm_function: func_ptr,
-            llvm_module: 0 as LLVMModuleRef
+            llvm_module: 0 as LLVMModuleRef,
+            function_type: 0 as LLVMTypeRef,
         }
     }
 
@@ -49,5 +52,9 @@ impl Function {
 
     pub fn params_count(&self) -> u32 {
         unsafe { LLVMCountParams(self.llvm_function) }
+    }
+
+    pub fn get_function_type(&self) -> LLVMTypeRef {
+        self.function_type
     }
 }

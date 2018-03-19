@@ -105,6 +105,10 @@ impl Context {
         Type::PointerType(self.Int8Type(), 0)
     }
 
+    pub fn PointerType(&self, typ: LLVMTypeRef) -> LLVMTypeRef {
+        Type::PointerType(typ, 0)
+    }
+
 
     pub fn SInt(&self, num_bits: c_uint, val: u64) -> LLVMValueRef {
         unsafe { LLVMConstInt(LLVMIntTypeInContext(self.llvm_context, num_bits), val, 1) }
