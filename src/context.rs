@@ -5,10 +5,10 @@ extern crate llvm_sys;
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
 use std::os::raw::c_uint;
-use std::ffi::CString;
 use LLVM::Type;
 use builder::Builder;
 use module::Module;
+use struct_type::Struct;
 
 #[derive(Debug)]
 pub struct Context {
@@ -53,21 +53,12 @@ impl Context {
     //
     // get Type
     //
-    pub fn StructTypeNamed(&self, name: &str) -> LLVMTypeRef {
-        let val_name = CString::new(name).unwrap();
-        unsafe { LLVMStructCreateNamed(self.llvm_context, val_name.as_ptr()) }
+    pub fn StructTypeNamed(&self, name: &str) -> Struct {
+        Struct::new_with_name(self.llvm_context, name)
     }
 
-    pub fn StructType(&self, fields: &mut [LLVMTypeRef], packed: bool) -> LLVMTypeRef {
-        unsafe { LLVMStructTypeInContext(self.llvm_context, fields.as_mut_ptr(), fields.len() as u32, if packed {1}else{0}) }
-    }
-
-    pub fn SetStructBody(structType: LLVMTypeRef, fields: &mut [LLVMTypeRef], packed: bool){
-        unsafe { LLVMStructSetBody(structType, fields.as_mut_ptr(), fields.len() as u32, if packed {1}else{0}) }
-    }
-
-    pub fn ConstStruct(constantValues: &mut [LLVMValueRef], packed: bool) -> LLVMValueRef {
-        unsafe { LLVMConstStruct(constantValues.as_mut_ptr(), constantValues.len() as u32, if packed {1}else{0}) }
+    pub fn StructType(&self, fields: &mut [LLVMTypeRef], packed: bool) -> Struct {
+        Struct::new(self.llvm_context, fields, packed)
     }
 
     pub fn VoidType(&self) -> LLVMTypeRef {

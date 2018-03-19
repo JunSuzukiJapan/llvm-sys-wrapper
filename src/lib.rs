@@ -6,6 +6,7 @@ mod function;
 mod context;
 mod engine;
 mod phi;
+mod struct_type;
 
 pub use self::llvm_sys::core::*;
 pub use self::llvm_sys::prelude::*;
