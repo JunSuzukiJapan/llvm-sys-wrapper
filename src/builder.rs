@@ -107,6 +107,15 @@ impl Builder {
         unsafe { LLVMBuildIntToPtr(self.llvm_builder, val, to_type, val_name.as_ptr() as *const i8) }
     }
 
+    pub fn build_ptr_to_int(&self, val: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        self.build_ptr_to_int_with_name(val, to_type, "")
+    }
+
+    pub fn build_ptr_to_int_with_name(&self, val: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildPtrToInt(self.llvm_builder, val, to_type, val_name.as_ptr() as *const i8) }
+    }
+
     pub fn build_bitcast(&self, value: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
         self.build_bitcast_with_name(value, to_type, "")
     }
