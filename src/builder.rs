@@ -614,6 +614,16 @@ impl Builder {
         unsafe { LLVMBuildCondBr(self.llvm_builder, condition, then_block, else_block) }
     }
 
+    pub fn build_switch(&self, value: LLVMValueRef, default: LLVMBasicBlockRef, cases: &[(LLVMValueRef, LLVMBasicBlockRef)]) -> LLVMValueRef {
+        unsafe {
+            let switch = LLVMBuildSwitch(self.llvm_builder, value, default, cases.len() as u32);
+            for case in cases {
+                LLVMAddCase(switch, case.0, case.1);
+            }
+            switch
+        }
+    }
+
     pub fn build_sext(&self, value: LLVMValueRef, dest_type: LLVMTypeRef) -> LLVMValueRef {
         self.build_sext_with_name(value, dest_type, "")
     }
