@@ -5,7 +5,7 @@ extern crate llvm_sys;
 use llvm_sys_wrapper::*;
 
 #[test]
-fn test_puts() {
+fn test_interpret() {
     // initialize LLVM
     LLVM::initialize();
 
@@ -39,7 +39,7 @@ fn test_puts() {
     // verify & dump
     match module.verify() {
         Ok(_) => {
-            module.dump();
+            //module.dump();
 
             let interperter = module.create_interpreter().unwrap();
             let named_function = module.named_function("main");

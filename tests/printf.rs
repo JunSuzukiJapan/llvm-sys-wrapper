@@ -4,7 +4,7 @@ extern crate llvm_sys_wrapper;
 use llvm_sys_wrapper::*;
 
 #[test]
-fn test_puts() {
+fn test_printf() {
     // initialize LLVM
     LLVM::initialize();
 
@@ -37,7 +37,7 @@ fn test_puts() {
 
     // verify & dump
     match module.verify() {
-        Ok(_) => module.dump(),
+        Ok(_) => { /* module.dump() */ },
         Err(msg) => panic!("Error: {}", msg)
     }
 }

@@ -30,6 +30,10 @@ impl Struct {
         unsafe { LLVMConstStruct(constant_values.as_mut_ptr(), constant_values.len() as u32, if packed {1}else{0}) }
     }
 
+    pub fn as_ref(&self) -> LLVMTypeRef {
+        self.struct_type
+    }
+
     pub fn set_body(&self, fields: &mut [LLVMTypeRef], packed: bool){
         unsafe { LLVMStructSetBody(self.struct_type, fields.as_mut_ptr(), fields.len() as u32, if packed {1}else{0}) }
     }
