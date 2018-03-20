@@ -5,7 +5,7 @@ extern crate llvm_sys;
 use llvm_sys_wrapper::*;
 
 #[test]
-fn test_interpret() {
+fn test_jit_engine() {
     // initialize LLVM
     LLVM::initialize();
 
@@ -14,7 +14,7 @@ fn test_interpret() {
 
     // setup our builder and module
     let builder = context.create_builder();
-    let module = context.create_module("interpret");
+    let module = context.create_module("jit_engine");
 
     // create main function and entry point
     let fun_type = fn_type!(context.VoidType());
@@ -23,8 +23,8 @@ fn test_interpret() {
     builder.position_at_end(entry_block);
 
     // setup strings
-    let hello = builder.build_global_string_ptr_with_name("Hello, %s\n", "hello");
-    let world = builder.build_global_string_ptr_with_name("Interpreter!", "world");
+    let hello = builder.build_global_string_ptr("Hello, %s\n");
+    let world = builder.build_global_string_ptr("JIT Engine!");
 
     // setup printf function
     let printf_type = fn_type!(context.Int32Type(), context.CharPointerType() ,,,);  // Int32 printf(CharPointer, ...)
@@ -41,7 +41,7 @@ fn test_interpret() {
         Ok(_) => {
             //module.dump();
 
-            let interperter = module.create_interpreter().unwrap();
+            let interperter = module.create_jit_engine().unwrap();
             let named_function = module.named_function("main");
             let mut params = [];
             let run_result = interperter.run_function(named_function.as_ref(), &mut params);

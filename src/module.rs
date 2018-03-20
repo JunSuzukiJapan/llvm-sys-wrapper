@@ -77,6 +77,10 @@ impl Module {
     pub fn create_interpreter(&self) -> Result<Engine, String> {
         Engine::create_interpreter(self.as_ref())
     }
+
+    pub fn create_jit_engine(&self) -> Result<Engine, String> {
+        Engine::create_jit_engine(self.as_ref())
+    }
 }
 
 impl Drop for Module {

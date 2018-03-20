@@ -35,6 +35,27 @@ impl Engine {
         }
     }
 
+    pub fn create_jit_engine(module: LLVMModuleRef) -> Result<Engine, String> {
+        let mut error: *mut c_char = 0 as *mut c_char;
+        let mut engine: LLVMExecutionEngineRef = 0 as LLVMExecutionEngineRef;
+        let result = unsafe {
+            let buf: *mut *mut c_char = &mut error;
+            let engine_ref: *mut LLVMExecutionEngineRef = &mut engine;
+            LLVMLinkInMCJIT();
+            LLVMCreateMCJITCompilerForModule(engine_ref, module, 0 as *mut LLVMMCJITCompilerOptions, 0, buf)
+        };        
+
+        if result == 1 { // error
+            let err_msg = unsafe { CString::from_raw(error).into_string().unwrap() };
+            Err(err_msg)
+
+        }else{           // ok
+            Ok(Engine {
+                llvm_execute_engine: engine
+            })
+        }
+    }
+
     pub fn as_ref(&self) -> LLVMExecutionEngineRef {
         self.llvm_execute_engine
     }

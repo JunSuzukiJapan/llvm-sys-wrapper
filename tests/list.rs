@@ -13,7 +13,7 @@ fn test_list() {
 
     // setup our builder and module
     let builder = context.create_builder();
-    let module = context.create_module("call_printf");
+    let module = context.create_module("list using struct");
 
     // create main function and entry point
     let fun_type = fn_type!(context.VoidType());
@@ -126,7 +126,7 @@ fn test_list() {
 
     // verify & dump
     match module.verify() {
-        Ok(_) => module.dump(),
+        Ok(_) => { /* module.dump() */ },
         Err(msg) => panic!("Error: {}", msg)
     }
 }
