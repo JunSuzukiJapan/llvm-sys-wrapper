@@ -74,6 +74,28 @@ impl Module {
         unsafe { LLVMDumpModule(self.llvm_module) }
     }
 
+    pub fn print_module_to_string(&self) -> String {
+        let ptr = unsafe { LLVMPrintModuleToString(self.llvm_module) };
+        let string = unsafe { CString::from_raw(ptr).into_string().unwrap() };
+        unsafe { LLVMDisposeMessage(ptr); }
+        string
+    }
+
+    pub fn print_module_to_file(&self, filename: &str) -> Result<(), String> {
+        let fname = CString::new(filename).unwrap();
+        let mut error: *mut c_char = 0 as *mut c_char;
+        let ok = unsafe {
+            let buf: *mut *mut c_char = &mut error;
+            LLVMPrintModuleToFile(self.llvm_module, fname.as_ptr(), buf)
+        };
+        if ok == 1 { // error
+            let err_msg = unsafe { CString::from_raw(error).into_string().unwrap() };
+            Err(err_msg)
+        }else{ // success
+            Ok(())
+        }
+    }
+
     pub fn create_interpreter(&self) -> Result<Engine, String> {
         Engine::create_interpreter(self.as_ref())
     }

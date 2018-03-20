@@ -89,7 +89,15 @@ fn main() {
     // dump
     //
     match module.verify() {
-        Ok(_) => module.dump(),
+        Ok(_) => {
+            let filename = "fib.ll";
+            let ret = module.print_module_to_file(filename);
+            if let Err(msg) = ret {
+                println!("Error: {}", msg);
+            }else{
+                println!("success compile to file '{}'.", filename);
+            }
+        },
         Err(msg) => panic!("Error: {}", msg),
     }
 }
