@@ -103,7 +103,8 @@ impl Builder {
     }
 
     pub fn build_int_to_ptr_with_name(&self, val: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
-        unsafe { LLVMBuildIntToPtr(self.llvm_builder, val, to_type, name.as_ptr() as *const i8) }
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildIntToPtr(self.llvm_builder, val, to_type, val_name.as_ptr() as *const i8) }
     }
 
     pub fn build_bitcast(&self, value: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
@@ -111,7 +112,62 @@ impl Builder {
     }
 
     pub fn build_bitcast_with_name(&self, value: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
-        unsafe { LLVMBuildBitCast(self.llvm_builder, value, to_type, name.as_ptr() as *const i8) }
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildBitCast(self.llvm_builder, value, to_type, val_name.as_ptr() as *const i8) }
+    }
+
+    pub fn build_zext(&self, val: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        self.build_zext_with_name(val, to_type, "")
+    }
+
+    pub fn build_zext_with_name(&self, val: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildZExt(self.llvm_builder, val, to_type, val_name.as_ptr()) }
+    }
+
+    pub fn build_trunc(&self, val: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        self.build_trunc_with_name(val, to_type, "")
+    }
+
+    pub fn build_trunc_with_name(&self, val: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildTrunc(self.llvm_builder, val, to_type, val_name.as_ptr()) }
+    }
+
+    pub fn build_fp_trunc(&self, val: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        self.build_fp_trunc_with_name(val, to_type, "")
+    }
+
+    pub fn build_fp_trunc_with_name(&self, val: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildFPTrunc(self.llvm_builder, val, to_type, val_name.as_ptr()) }
+    }
+
+    pub fn build_trunc_or_bitcast(&self, val: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
+        self.build_trunc_or_bitcast_with_name(val, to_type, "")
+    }
+
+    pub fn build_trunc_or_bitcast_with_name(&self, val: LLVMValueRef, to_type: LLVMTypeRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildTruncOrBitCast(self.llvm_builder, val, to_type, val_name.as_ptr()) }
+    }
+
+    pub fn build_insert_value(&self, agg_val: LLVMValueRef, elt_val: LLVMValueRef, index: u32) -> LLVMValueRef {
+        self.build_insert_value_with_name(agg_val, elt_val, index, "")
+    }
+
+    pub fn build_insert_value_with_name(&self, agg_val: LLVMValueRef, elt_val: LLVMValueRef, index: u32, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildInsertValue(self.llvm_builder, agg_val, elt_val, index, val_name.as_ptr())}
+    }
+
+    pub fn build_extract_value(&self, agg_val: LLVMValueRef, index: u32) -> LLVMValueRef {
+        self.build_extract_value_with_name(agg_val, index, "")
+    }
+
+    pub fn build_extract_value_with_name(&self, agg_val: LLVMValueRef, index: u32, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildExtractValue(self.llvm_builder, agg_val, index, val_name.as_ptr())}
     }
 
     pub fn build_add(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
