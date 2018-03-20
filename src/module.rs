@@ -90,6 +90,7 @@ impl Module {
         };
         if ok == 1 { // error
             let err_msg = unsafe { CString::from_raw(error).into_string().unwrap() };
+            unsafe { LLVMDisposeMessage(error) }
             Err(err_msg)
         }else{ // success
             Ok(())
