@@ -30,7 +30,7 @@ fn test_list() {
 
     // setup strings
     let fmt_num = builder.build_global_string_ptr("%d");
-    let fmt_str = builder.build_global_string_ptr("%s");
+    let str_space = builder.build_global_string_ptr(" ");
     let str_lparen = builder.build_global_string_ptr("(");
     let str_rparen = builder.build_global_string_ptr(")\n");
 
@@ -87,6 +87,7 @@ fn test_list() {
 
     // define loop block
     let loop_block = function.append_basic_block("loop");
+    let print_space_block = function.append_basic_block("print_space");
     let end_block = function.append_basic_block("loop_end");
     builder.build_br(loop_block);
     builder.position_at_end(loop_block);
@@ -102,7 +103,15 @@ fn test_list() {
     builder.build_store(builder.build_load(next), ptr);
     let cond = builder.build_icmp_eq(null_pointer, builder.build_load(ptr));
 
-    builder.build_cond_br(cond, loop_block, end_block);
+    builder.build_cond_br(cond, end_block, print_space_block);
+
+    // print space
+    builder.position_at_end(print_space_block);
+
+    let mut args = [str_space];
+    builder.build_call(printf_func.as_ref(), &mut args);
+
+    builder.build_br(loop_block);
 
     // loop end
     builder.position_at_end(end_block);
