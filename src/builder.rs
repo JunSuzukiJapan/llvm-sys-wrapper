@@ -89,6 +89,15 @@ impl Builder {
         unsafe { LLVMBuildLoad(self.llvm_builder, pointer_val, val_name.as_ptr()) }
     }
 
+    pub fn build_select(&self, cond: LLVMValueRef, then_val: LLVMValueRef, else_val: LLVMValueRef) -> LLVMValueRef {
+        self.build_select_with_name(cond, then_val, else_val, "")
+    }
+
+    pub fn build_select_with_name(&self, cond: LLVMValueRef, then_val: LLVMValueRef, else_val: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name = CString::new(name).unwrap();
+        unsafe { LLVMBuildSelect(self.llvm_builder, cond, then_val, else_val, val_name.as_ptr() as *const i8) }
+    }
+
     pub fn build_int_to_ptr(&self, val: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
         self.build_int_to_ptr_with_name(val, to_type, "")
     }
