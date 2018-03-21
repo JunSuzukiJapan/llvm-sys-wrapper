@@ -57,4 +57,17 @@ impl Function {
     pub fn get_function_type(&self) -> LLVMTypeRef {
         self.function_type
     }
+
+    pub fn get_return_type(&self) -> LLVMTypeRef {
+        unsafe { LLVMGetReturnType(self.function_type) }
+    }
+
+    pub fn get_param_types(&self) -> LLVMTypeRef {
+        unsafe {
+            let mut types : LLVMTypeRef = 0 as LLVMTypeRef;
+            let ptr: *mut LLVMTypeRef = &mut types;
+            LLVMGetParamTypes(self.function_type, ptr);
+            types
+        }    
+    }
 }
