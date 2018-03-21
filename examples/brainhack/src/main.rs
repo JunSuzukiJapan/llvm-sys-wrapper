@@ -39,8 +39,8 @@ impl Compiler {
         let calloc_func = module.get_or_add_function("calloc", calloc_type);
 
         // setup memory
-        let data = builder.build_alloca(context.Int8PointerType(), "data");
-        let ptr = builder.build_alloca(context.Int8PointerType(), "ptr");
+        let data = builder.build_alloca(context.Int8PointerType());
+        let ptr = builder.build_alloca(context.Int8PointerType());
 
         let mut args = [context.UInt64(30000), context.UInt64(1)];
         let data_ptr = builder.build_call(calloc_func.as_ref(), &mut args);
