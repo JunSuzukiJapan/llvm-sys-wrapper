@@ -7,6 +7,7 @@ mod context;
 mod engine;
 mod phi;
 mod struct_type;
+mod cstring_manager;
 
 pub use self::llvm_sys::core::*;
 pub use self::llvm_sys::prelude::*;
