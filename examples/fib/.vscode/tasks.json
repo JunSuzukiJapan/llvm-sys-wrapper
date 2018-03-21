@@ -35,7 +35,8 @@
         {
             "label": "clean",
             "type": "shell",
-            "command": "cargo clean"
+            "command": "cargo clean",
+            "problemMatcher": []
         },
         {
             "label": "run",

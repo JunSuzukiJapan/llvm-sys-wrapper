@@ -1,4 +1,5 @@
 extern crate llvm_sys;
+extern crate libc;
 
 mod builder;
 mod module;
