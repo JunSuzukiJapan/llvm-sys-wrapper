@@ -5,6 +5,7 @@ extern crate llvm_sys;
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
 use self::llvm_sys::analysis::{LLVMVerifyModule, LLVMVerifierFailureAction};
+use cstring_manager::CStringManager;
 use std::ffi::CString;
 use std::os::raw::c_char;
 use function;
@@ -17,16 +18,16 @@ pub struct Module {
 
 impl Module {
     pub fn new(name: &str) -> Module {
-        let mod_name = CString::new(name).unwrap();
-        let module = unsafe { LLVMModuleCreateWithName(mod_name.as_ptr()) };
+        let mod_name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let module = unsafe { LLVMModuleCreateWithName(mod_name_ptr) };
         Module {
             llvm_module: module
         }
     }
 
     pub fn new_in_context(name: &str, context: LLVMContextRef) -> Module {
-        let mod_name = CString::new(name).unwrap();
-        let module = unsafe { LLVMModuleCreateWithNameInContext(mod_name.as_ptr(), context) };
+        let mod_name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let module = unsafe { LLVMModuleCreateWithNameInContext(mod_name_ptr, context) };
         Module {
             llvm_module: module
         }
@@ -41,14 +42,14 @@ impl Module {
     }
 
     pub fn named_function(&self, name: &str) -> function::Function {
-        let func_name = CString::new(name).unwrap();
-        let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name.as_ptr()) };
+        let func_name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name_ptr) };
         function::Function::from_ptr(named_function)
     }
 
     pub fn get_or_add_function(&self, name: &str, function_type: LLVMTypeRef) -> function::Function {
-        let func_name = CString::new(name).unwrap();
-        let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name.as_ptr()) };
+        let func_name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name_ptr) };
         if named_function.is_null() {
             function::Function::new(self.llvm_module, name, function_type)
         }else{
@@ -82,11 +83,11 @@ impl Module {
     }
 
     pub fn print_module_to_file(&self, filename: &str) -> Result<(), String> {
-        let fname = CString::new(filename).unwrap();
+        let fname_ptr = CStringManager::new_cstring_as_ptr(filename);
         let mut error: *mut c_char = 0 as *mut c_char;
         let ok = unsafe {
             let buf: *mut *mut c_char = &mut error;
-            LLVMPrintModuleToFile(self.llvm_module, fname.as_ptr(), buf)
+            LLVMPrintModuleToFile(self.llvm_module, fname_ptr, buf)
         };
         if ok == 1 { // error
             let err_msg = unsafe { CString::from_raw(error).into_string().unwrap() };

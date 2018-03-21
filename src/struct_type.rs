@@ -1,8 +1,8 @@
 extern crate llvm_sys;
 
-use std::ffi::CString;
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
+use cstring_manager::CStringManager;
 
 pub struct Struct {
     struct_type: LLVMTypeRef
@@ -10,8 +10,8 @@ pub struct Struct {
 
 impl Struct {
     pub fn new_with_name(ctx: LLVMContextRef, name: &str) -> Struct {
-        let val_name = CString::new(name).unwrap();
-        let struct_ty = unsafe { LLVMStructCreateNamed(ctx, val_name.as_ptr()) };
+        let name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let struct_ty = unsafe { LLVMStructCreateNamed(ctx, name_ptr) };
 
         Struct {
             struct_type: struct_ty

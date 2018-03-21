@@ -2,7 +2,7 @@ extern crate llvm_sys;
 
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
-use std::ffi::CString;
+use cstring_manager::CStringManager;
 
 #[derive(Debug)]
 pub struct Phi {
@@ -11,8 +11,8 @@ pub struct Phi {
 
 impl Phi {
     pub fn new(builder: LLVMBuilderRef, typ: LLVMTypeRef, name: &str) -> Phi {
-        let val_name = CString::new(name).unwrap();
-        let phi = unsafe { LLVMBuildPhi(builder, typ, val_name.as_ptr()) };
+        let name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let phi = unsafe { LLVMBuildPhi(builder, typ, name_ptr) };
         Phi {
             llvm_phi: phi
         }

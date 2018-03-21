@@ -4,7 +4,7 @@ extern crate llvm_sys;
 
 use self::llvm_sys::core::*;
 use self::llvm_sys::prelude::*;
-use std::ffi::CString;
+use cstring_manager::CStringManager;
 
 #[derive(Debug)]
 pub struct Function {
@@ -15,8 +15,8 @@ pub struct Function {
 
 impl Function {
     pub fn new(module: LLVMModuleRef, name: &str, function_type: LLVMTypeRef) -> Function {
-        let function_name = CString::new(name).unwrap();
-        let function = unsafe { LLVMAddFunction(module, function_name.as_ptr(), function_type) };
+        let function_name_ptr = CStringManager::new_cstring_as_ptr(name);
+        let function = unsafe { LLVMAddFunction(module, function_name_ptr, function_type) };
         Function {
             llvm_function: function,
             llvm_module: module,
@@ -33,12 +33,12 @@ impl Function {
     }
 
     pub fn append_basic_block(&self, name: &str) -> LLVMBasicBlockRef {
-        let label_name = CString::new(name).unwrap();
+        let label_name_ptr = CStringManager::new_cstring_as_ptr(name);
         if self.llvm_module.is_null() {
-            unsafe { LLVMAppendBasicBlock(self.llvm_function, label_name.as_ptr()) }
+            unsafe { LLVMAppendBasicBlock(self.llvm_function, label_name_ptr) }
         }else{
             let context = unsafe { LLVMGetModuleContext(self.llvm_module) };
-            unsafe { LLVMAppendBasicBlockInContext(context, self.llvm_function, label_name.as_ptr()) }
+            unsafe { LLVMAppendBasicBlockInContext(context, self.llvm_function, label_name_ptr) }
         }
     }
 

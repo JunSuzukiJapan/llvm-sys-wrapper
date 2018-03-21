@@ -19,7 +19,7 @@ impl CStringManager {
         if self.cstrings == 0 as *mut Vec<CString> {
             self.cstrings = &mut Vec::new();
         }
-        let mut v: &mut Vec<CString> = unsafe { &mut *self.cstrings };
+        let v: &mut Vec<CString> = unsafe { &mut *self.cstrings };
         v.push(cstring)
     }
 }
