@@ -63,11 +63,11 @@ impl Function {
     }
 
     pub fn get_param_types(&self) -> LLVMTypeRef {
+        let mut types : LLVMTypeRef = 0 as LLVMTypeRef;
+        let ptr: *mut LLVMTypeRef = &mut types;
         unsafe {
-            let mut types : LLVMTypeRef = 0 as LLVMTypeRef;
-            let ptr: *mut LLVMTypeRef = &mut types;
             LLVMGetParamTypes(self.function_type, ptr);
-            types
-        }    
+        }
+        types
     }
 }
