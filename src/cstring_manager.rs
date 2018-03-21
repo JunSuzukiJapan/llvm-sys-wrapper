@@ -28,13 +28,27 @@ impl List {
 
 #[derive(Debug)]
 pub struct CStringManager {
-    cstrings: *mut List
+    cstrings: *mut List,
 }
 
-static mut INSTANCE: CStringManager = CStringManager { cstrings: 0 as *mut List };
+static mut INSTANCE: CStringManager = CStringManager {
+    cstrings: 0 as *mut List,
+};
+
+static mut ZERO_BYTE_STRING: *mut i8 = 0 as *mut i8;
 
 impl CStringManager {
     pub fn new_cstring_as_ptr(string: &str) -> *const i8 {
+        if string.len() == 0 {
+            unsafe {
+                if ZERO_BYTE_STRING.is_null() {
+                    ZERO_BYTE_STRING = libc::malloc(1) as *mut i8;
+                    *ZERO_BYTE_STRING.offset(0) = '\0' as i8;
+                }
+                return ZERO_BYTE_STRING;
+            }
+        }
+
         let ptr = unsafe {
             // malloc
             let buf : *mut c_void = libc::malloc(string.len() + 1);
@@ -74,6 +88,8 @@ impl Drop for CStringManager {
                 list = (*list).next;
                 libc::free(ptr as *mut c_void);
             }
+
+            libc::free(ZERO_BYTE_STRING as *mut c_void);
         }
     }
 }
