@@ -123,6 +123,14 @@ impl Context {
     //
     // define Constant util
     //
+    pub fn Null(&self, typ: LLVMTypeRef) -> LLVMValueRef {
+        unsafe { LLVMConstNull(typ) }
+    }
+
+    pub fn PointerNull(&self, typ: LLVMTypeRef) -> LLVMValueRef {
+        unsafe { LLVMConstPointerNull(typ) }
+    }
+
     pub fn Bitcast(&self, constant: LLVMValueRef, to_type: LLVMTypeRef) -> LLVMValueRef {
         unsafe { LLVMConstBitCast(constant, to_type) }
     }

@@ -1,6 +1,6 @@
 [package]
 name = "llvm-sys-wrapper"
-version = "0.2.8"
+version = "0.2.9"
 authors = ["Jun Suzuki <jun.suzuki.japan@gmail.com>"]
 repository = "https://github.com/JunSuzukiJapan/llvm-sys-wrapper"
 keywords = ["llvm"]
