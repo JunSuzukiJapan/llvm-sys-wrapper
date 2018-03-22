@@ -77,6 +77,10 @@ impl FuncallResult {
         }
     }
 
+    pub fn as_ref(&self) -> LLVMGenericValueRef {
+        self.value
+    }
+
     pub fn to_int(&self) -> c_ulonglong {
         unsafe { LLVMGenericValueToInt(self.value, 0) }
     }
