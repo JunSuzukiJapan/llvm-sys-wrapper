@@ -26,6 +26,7 @@ impl Struct {
         }
     }
 
+    #[inline]
     pub fn new_const_struct(constant_values: &mut [LLVMValueRef], packed: bool) -> LLVMValueRef {
         unsafe { LLVMConstStruct(constant_values.as_mut_ptr(), constant_values.len() as u32, if packed {1}else{0}) }
     }
@@ -34,6 +35,7 @@ impl Struct {
         self.struct_type
     }
 
+    #[inline]
     pub fn set_body(&self, fields: &mut [LLVMTypeRef], packed: bool){
         unsafe { LLVMStructSetBody(self.struct_type, fields.as_mut_ptr(), fields.len() as u32, if packed {1}else{0}) }
     }

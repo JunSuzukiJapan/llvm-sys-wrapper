@@ -8,7 +8,7 @@ include the following in your Cargo.toml file:
 
 ```
 [dependencies]
-llvm-sys-wrapper="0.1"
+llvm-sys-wrapper="0.6.0"
 ```
 
 And then import the library using:

@@ -46,22 +46,27 @@ impl Function {
         self.llvm_function
     }
 
+    #[inline]
     pub fn get_param(&self, index: u32) -> LLVMValueRef {
         unsafe { LLVMGetParam(self.llvm_function, index) }
     }
 
+    #[inline]
     pub fn params_count(&self) -> u32 {
         unsafe { LLVMCountParams(self.llvm_function) }
     }
 
+    #[inline]
     pub fn get_function_type(&self) -> LLVMTypeRef {
         self.function_type
     }
 
+    #[inline]
     pub fn get_return_type(&self) -> LLVMTypeRef {
         unsafe { LLVMGetReturnType(self.function_type) }
     }
 
+    #[inline]
     pub fn get_param_types(&self) -> LLVMTypeRef {
         let mut types : LLVMTypeRef = 0 as LLVMTypeRef;
         let ptr: *mut LLVMTypeRef = &mut types;

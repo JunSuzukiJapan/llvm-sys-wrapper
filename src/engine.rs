@@ -81,22 +81,27 @@ impl FuncallResult {
         self.value
     }
 
+    #[inline]
     pub fn to_int(&self) -> c_ulonglong {
         unsafe { LLVMGenericValueToInt(self.value, 0) }
     }
 
+    #[inline]
     pub fn int_width(&self) -> c_uint {
         unsafe { LLVMGenericValueIntWidth(self.value) }
     }
 
+    #[inline]
     pub fn to_ptr(&self) -> *mut c_void {
         unsafe { LLVMGenericValueToPointer(self.value) }
     }
 
+    #[inline]
     pub fn to_float(&self) -> f32 {
         unsafe { LLVMGenericValueToFloat(Type::Float(), self.value) as f32 }
     }
 
+    #[inline]
     pub fn to_double(&self) -> f64 {
         unsafe { LLVMGenericValueToFloat(Type::Double(), self.value) }
     }

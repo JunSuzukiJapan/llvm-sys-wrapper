@@ -22,12 +22,14 @@ impl Phi {
         self.llvm_phi
     }
 
+    #[inline]
     pub fn add_incoming(&self, value: LLVMValueRef, block: LLVMBasicBlockRef){
         let mut values = [value];
         let mut blocks = [block];
         self.add_incomings(&mut values, &mut blocks);
     }
 
+    #[inline]
     pub fn add_incomings(&self, values: &mut [LLVMValueRef], blocks: &mut [LLVMBasicBlockRef]){
         let count = values.len();
         if count != blocks.len() {
@@ -38,10 +40,12 @@ impl Phi {
         }
     }
 
+    #[inline]
     pub fn incoming_count(&self) -> u32 {
         unsafe { LLVMCountIncoming(self.llvm_phi) }
     }
 
+    #[inline]
     pub fn get_incoming(&self, index: u32) -> (LLVMValueRef, LLVMBasicBlockRef) {
         let value = unsafe { LLVMGetIncomingValue(self.llvm_phi, index) };
         let block = unsafe { LLVMGetIncomingBlock(self.llvm_phi, index) };

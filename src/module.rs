@@ -41,6 +41,7 @@ impl Module {
         function::Function::new(self.llvm_module, name, function_type)
     }
 
+    #[inline]
     pub fn named_function(&self, name: &str) -> function::Function {
         let func_name_ptr = CStringManager::new_cstring_as_ptr(name);
         let named_function = unsafe { LLVMGetNamedFunction(self.llvm_module, func_name_ptr) };
@@ -71,6 +72,7 @@ impl Module {
         }
     }
 
+    #[inline]
     pub fn dump(&self){
         unsafe { LLVMDumpModule(self.llvm_module) }
     }
@@ -98,16 +100,19 @@ impl Module {
         }
     }
 
+    #[inline]
     pub fn create_interpreter(&self) -> Result<Engine, String> {
         Engine::create_interpreter(self.as_ref())
     }
 
+    #[inline]
     pub fn create_jit_engine(&self) -> Result<Engine, String> {
         Engine::create_jit_engine(self.as_ref())
     }
 }
 
 impl Drop for Module {
+    #[inline]
     fn drop(&mut self) {
         unsafe { LLVMDisposeModule(self.llvm_module) }
     }
