@@ -17,7 +17,7 @@ pub use self::module::Module;
 pub use self::function::Function;
 pub use self::context::Context;
 pub use self::phi::Phi;
-pub use self::engine::Engine;
+pub use self::engine::{Engine, FuncallResult};
 pub use self::struct_type::Struct;
 pub use self::llvm_sys::*;
 
